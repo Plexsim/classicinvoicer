@@ -53,7 +53,7 @@
 			  
 			  <div class="form-group">
               <label>Client Country</label>
-      				<?php echo country_dropdown('client_country', 'client_country', 'form-control', set_value('client_country'), array(), ''); ?>
+      				<?php echo country_dropdown('client_country', 'client_country', 'form-control', set_value('client_country') ? set_value('client_country') : 'MY' , array(), ''); ?>
       				<?php echo form_error('client_country'); ?>
               </div>
 			  
@@ -73,6 +73,12 @@
                 <label>Client Email</label>
                 <input class="form-control" name="client_email" value="<?php echo set_value('client_email');?>"/>
 				        <?php echo form_error('client_email'); ?>
+         </div>
+         
+         <div class="form-group">
+                <label>Client GST</label>
+                <input class="form-control" name="client_gst" value="<?php echo set_value('client_gst');?>"/>
+				<?php echo form_error('client_gst'); ?>
          </div>
 
               <button type="submit" class="btn btn-large btn-success" name="createclientbtn" value="New Client">Create Client</button>

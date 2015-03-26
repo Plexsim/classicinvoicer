@@ -8,6 +8,10 @@ $(function() {
 		$('#modal-placeholder').load(site_url+"invoices/items_from_products/" + Math.floor(Math.random()*1000));
 	});
 	
+	$('#bttn_add_tax_product').click(function() {
+		$('#modal-placeholder').load(site_url+"tax_invoices/items_from_products/" + Math.floor(Math.random()*1000));
+	});
+	
 	$('#bttn_quote_add_product').click(function() {
 		$('#modal-placeholder').load(site_url+"quotes/items_from_products/" + Math.floor(Math.random()*1000));
 	});
@@ -34,6 +38,14 @@ function viewInvoice(invoice_id)
 {
 	$('#modal-placeholder').load(site_url+"invoices/previewinvoice/" + invoice_id);
 }
+function enterTaxPayment(invoice_id)
+{
+	$('#modal-placeholder').load(site_url+"tax_invoices/enter_payment/" + invoice_id);
+}
+function viewTaxInvoice(invoice_id)
+{
+	$('#modal-placeholder').load(site_url+"tax_invoices/previewinvoice/" + invoice_id);
+}
 
 function viewQuote(quote_id)
 {
@@ -49,7 +61,10 @@ function emailclient(invoice_id)
 {
 	$('#modal-placeholder').load(site_url+"invoices/emailclient/" + invoice_id);
 }
-
+function emailtaxclient(invoice_id)
+{
+	$('#modal-placeholder').load(site_url+"tax_invoices/emailclient/" + invoice_id);
+}
 function emailclientquote(quote_id)
 {
 	$('#modal-placeholder').load(site_url+"quotes/emailclient/" + quote_id);
@@ -96,6 +111,48 @@ function calculateInvoiceAmounts()
 		$('.loading').fadeOut('slow');
 	});
 }
+function calculateTaxInvoiceAmounts()
+{
+	var items = [];
+	var item_order = 1;
+	$('.loading').fadeIn('slow');
+	$('table tr.item').each(function() {
+		var row = {};
+		var quantity = $(this).find("input[name=item_quantity]").val();
+		var unit_price = $(this).find("input[name=item_price]").val();
+		var discount = $(this).find("input[name=item_discount]").val();
+		$(this).find("input[name=item_sub_total]").val(quantity*unit_price-discount);
+		
+		$(this).find('input,select,textarea').each(function() 
+		{
+			row[$(this).attr('name')] = $(this).val();			
+		});
+		items.push(row);
+	});
+	  $.post(site_url+"tax_invoices/ajax_calculate_totals", {
+		items: JSON.stringify(items),'invoice_discount_amount' : $('#invoice_discount_amount').val(), 'invoice_id' : $('#invoice_id').val()
+	},
+	function(data) {
+		var response = JSON.parse(data);
+		if (response.success == '1') 
+		{
+			$('#items_total_cost').html(response.items_total_cost);
+			$('#invoice_total_tax').html(response.invoice_total_tax);
+			$('#invoice_sub_total1').html(response.items_sub_total1);
+			$('#invoice_sub_total2').html(response.invoice_sub_total2);
+			$('#invoice_discount_amount').html(response.invoice_discount_amount);
+			$('#invoice_amount_due').html(response.invoice_amount_due);
+		}
+		else {
+			$('.control-group').removeClass('error');
+			for (var key in response.validation_errors) {
+				$('#' + key).parent().parent().addClass('error');
+			}
+		}
+		$('.loading').fadeOut('slow');
+	});
+}
+
 function ajax_save_invoice()
 {
 	var client = $('#client_to_invoice').val();
@@ -154,6 +211,89 @@ function ajax_save_invoice()
 		if (response.success == '1') 
 		{
 			window.location = site_url+"invoices";
+		}
+		else {
+			alert(response.error);
+		}
+		$('.loading').fadeOut('slow');
+	});
+	}
+}
+
+function objToString (obj) {
+    var str = '';
+    for (var p in obj) {
+        if (obj.hasOwnProperty(p)) {
+        	
+        	for (var sub in obj[p]) {
+        		str += sub + '::' + obj[p][sub] + '\n';
+        	}
+        	
+            
+        }
+    }
+    return str;
+}
+
+function ajax_save_tax_invoice()
+{
+	var client = $('#client_to_invoice').val();
+	var invoice_date = $('#invoice_date').val();
+	var due_date = $('#invoice_due_date').val();
+	var invoice_terms = $('#invoice_terms').val();
+	var invoice_status = $('#invoice_status').val();
+	var invoice_number = $('#invoice_number').val();
+	var invoice_id = $('#invoice_id').val();
+	var save_type  = $('#save_type').val();
+	var invoice_discount_amount = $('#invoice_discount_amount').val();
+	$('.loading').fadeIn('slow');
+
+	if(client == '')
+	{
+		alert('Please select a client to invoice');
+		$('.loading').fadeOut('slow');
+	}
+	else if(invoice_date == '' )
+	{
+		alert('Please enter the invoice date');
+		$('.loading').fadeOut('slow');
+	}
+	else if(due_date == '' )
+	{
+		alert('Please enter the invoice due date');
+		$('.loading').fadeOut('slow');
+	}
+	else
+	{
+	var items = [];
+	var item_order = 1;
+	$('table tr.item').each(function() {
+		var row = {};
+		$(this).find('input,select,textarea').each(function() {
+			row[$(this).attr('name')] = $(this).val();
+		});
+		row['item_order'] = item_order;
+		item_order++;
+		items.push(row);
+	});
+	  $.post(site_url+"tax_invoices/ajax_save_invoice", {
+	  invoice_client : client,
+	  invoice_date : invoice_date,
+	  invoice_due_date : due_date,
+	  invoice_terms : invoice_terms,
+	  invoice_status : invoice_status,
+	  invoice_number : invoice_number,
+	  invoice_id 	: invoice_id,
+	  save_type		: save_type,
+	  invoice_discount_amount : invoice_discount_amount,
+	  items: JSON.stringify(items)
+	},
+	function(data_response) {
+		var response = JSON.parse(data_response);
+		if (response.success == '1') 
+		{
+			window.location = site_url+"tax_invoices";
+			//alert(objToString(response.item));
 		}
 		else {
 			alert(response.error);
@@ -284,6 +424,14 @@ function delete_invoice (invoice_id)
 	if(confirm("Are you sure you want to permanently delete this invoice, you will not be able to undo this action"))
 	{
 		window.location = site_url+"invoices/delete_invoice/"+invoice_id;
+	}
+}
+//function to delete an tax invoice
+function delete_tax_invoice (invoice_id)
+{
+	if(confirm("Are you sure you want to permanently delete this tax invoice, you will not be able to undo this action"))
+	{
+		window.location = site_url+"tax_invoices/delete_invoice/"+invoice_id;
 	}
 }
 //function to delete an invoice

@@ -3,6 +3,8 @@
 	{
 		$config 	= $settings->row();
 		$name 		= $config->name;
+		$gst		= $config->gst;
+		$ssm		= $config->ssm;
 		$address 	= $config->address;
 		$fax 		= $config->fax;
 		$postal_code= $config->postal_code;
@@ -46,6 +48,18 @@
                 <input class="form-control" name="companyname" value="<?php echo (isset($name)) ? $name : ''; ?>"/>
 				<?php echo form_error('companyname'); ?>
               </div>
+              
+              <div class="form-group">
+                <label>GST</label>
+                <input class="form-control" name="companygst" value="<?php echo (isset($gst)) ? $gst : ''; ?>"/>
+				<?php echo form_error('companygst'); ?>
+              </div>
+              
+               <div class="form-group">
+                <label>SSM</label>
+                <input class="form-control" name="companyssm" value="<?php echo (isset($ssm)) ? $ssm : ''; ?>"/>
+				<?php echo form_error('companyssm'); ?>
+              </div>              
 
               <div class="form-group">
                 <label>Address</label>

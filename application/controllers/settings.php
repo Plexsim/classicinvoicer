@@ -18,6 +18,8 @@ class Settings extends MY_Controller {
 		if($this->input->post('updatesettingsbtn'))
 		{
 			$this->form_validation->set_rules('companyname', 'company name', 'trim|xss_clean');
+			$this->form_validation->set_rules('companygst', 'gst', 'trim|xss_clean');
+			$this->form_validation->set_rules('companyssm', 'ssm', 'trim|xss_clean');
 			$this->form_validation->set_rules('companyaddress', 'company address', 'trim|xss_clean');
 			$this->form_validation->set_rules('companyfax', 'company fax', 'trim|xss_clean');
 			$this->form_validation->set_rules('companyemail', 'company email', 'trim|valid_email|xss_clean');
@@ -28,6 +30,8 @@ class Settings extends MY_Controller {
 			{
 				$p_data = $_POST;
 				$settings = array('name' 	=> $p_data['companyname'],
+								  'gst' => $p_data['companygst'],
+								  'ssm' => $p_data['companyssm'],
 								  'address' => $p_data['companyaddress'],
 								  'fax' 	=> $p_data['companyfax'],
 								  'postal_code' => $p_data['postal_code'],

@@ -8,7 +8,7 @@ class Dashboard extends MY_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('invoice_model');
+		$this->load->model(array('invoice_model','tax_invoice_model'));
 		is_logged_in();
 	}
 	public function index()
@@ -17,7 +17,10 @@ class Dashboard extends MY_Controller {
 		$data['title'] 			= $this->title;
 		$data['activemenu'] 	= $this->activemenu;
 		$data['invoice_stats']	= $this->invoice_model->invoice_stats();
-		$data['recent_invoices']= $this->invoice_model->recent_invoices();
+		//$data['recent_invoices']= $this->invoice_model->recent_invoices();
+		$data['recent_tax_invoices']= $this->tax_invoice_model->recent_invoices();
+		
+		
 		$data['pagecontent'] 	= 'dashboard/dashboard';
 		$this->load->view('common/holder', $data);
 	}

@@ -43,8 +43,9 @@ class Clients extends MY_Controller {
 		{
 			$this->form_validation->set_rules('client_name', 'name', 'trim|required|xss_clean');
 			$this->form_validation->set_rules('client_address', 'address', 'trim|required|xss_clean');
+			$this->form_validation->set_rules('client_gst', 'gst', 'trim|xss_clean');
 			$this->form_validation->set_rules('client_postalcode', 'address', 'trim|xss_clean');
-			$this->form_validation->set_rules('client_email', 'email', 'trim|required|valid_email|callback_email_exists|xss_clean');
+			$this->form_validation->set_rules('client_email', 'email', 'trim|valid_email|callback_email_exists|xss_clean');
 			$this->form_validation->set_rules('client_city', 'city', 'trim|required|xss_clean');
 			$this->form_validation->set_rules('client_country', 'country', 'trim|required|xss_clean');
 			$this->form_validation->set_rules('client_telephone', 'telephone', 'trim|required|xss_clean');
@@ -60,6 +61,7 @@ class Clients extends MY_Controller {
 									  'client_phone'		=> $this->input->post('client_telephone'),
 									  'client_fax'			=> $this->input->post('client_fax'),
 									  'client_email'		=> $this->input->post('client_email'),
+									  'client_gst'			=> $this->input->post('client_gst'),
 									  'client_date_created'	=> date('Y-m-d', time()),
 									 );
 				$this->common_model->dbinsert('ci_clients', $client_details);
@@ -84,7 +86,8 @@ class Clients extends MY_Controller {
 			$this->form_validation->set_rules('client_name', 'name', 'trim|required|xss_clean');
 			$this->form_validation->set_rules('client_address', 'address', 'trim|required|xss_clean');
 			$this->form_validation->set_rules('client_postalcode', 'address', 'trim|xss_clean');
-			$this->form_validation->set_rules('client_email', 'email', 'trim|required|valid_email|xss_clean');
+			$this->form_validation->set_rules('client_email', 'email', 'trim|valid_email|xss_clean');
+			$this->form_validation->set_rules('client_gst', 'gst', 'trim|xss_clean');
 			$this->form_validation->set_rules('client_city', 'city', 'trim|required|xss_clean');
 			$this->form_validation->set_rules('client_country', 'country', 'trim|required|xss_clean');
 			$this->form_validation->set_rules('client_telephone', 'telephone', 'trim|required|xss_clean');
@@ -92,12 +95,12 @@ class Clients extends MY_Controller {
 			$this->form_validation->set_error_delimiters('<p class="has-error"><label class="control-label">', '</label></p>');
 			if($this->form_validation->run())
 			{
-				if(!$this->email_exists($this->input->post('client_email'), $client_id))
+				/* if(!$this->email_exists($this->input->post('client_email'), $client_id))
 				{
 					$data['email_exists_error'] = 'Email already exists, please choose another email address.';
 				}
 				else
-				{
+				{ */
 				$client_details = array('client_name'		=> $this->input->post('client_name'),
 									  'client_address'		=> $this->input->post('client_address'),
 									  'postal_code'		=> $this->input->post('client_postalcode'),
@@ -106,11 +109,12 @@ class Clients extends MY_Controller {
 									  'client_phone'		=> $this->input->post('client_telephone'),
 									  'client_fax'			=> $this->input->post('client_fax'),
 									  'client_email'		=> $this->input->post('client_email'),
+									  'client_gst'			=> $this->input->post('client_gst'),
 									 );
 				$this->common_model->update_records('ci_clients', 'client_id', $client_id, $client_details);
 				$this->session->set_flashdata('success', 'Client has been updated successfully !!');
 				redirect('clients');
-				}
+				/* } */
 			}
 		}
 		$data['title'] 			= $this->title;

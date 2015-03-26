@@ -77,6 +77,12 @@
 				if(isset($email_exists_error)) echo '<p class="has-error"><label class="control-label">'.$email_exists_error.'</label></p>';
 				?>
               </div>
+              
+              <div class="form-group">
+                <label>Client GST</label>
+                <input class="form-control" name="client_gst" value="<?php echo (isset($client->client_gst)) ? $client->client_gst : '' ;?>"/>
+				<?php echo form_error('client_gst'); ?>
+              </div>
 
               <button type="submit" class="btn btn-large btn-success" name="editclientbtn" value="Edit Client">Update Client Details</button>
             </form>
