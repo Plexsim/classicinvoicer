@@ -13,9 +13,11 @@
 	<link href="<?php echo base_url().CSSFOLDER; ?>dt_bootstrap.css" rel="stylesheet">
 	<link href="<?php echo base_url().CSSFOLDER; ?>datepicker.css" rel="stylesheet">
     <link href="<?php echo base_url().CSSFOLDER; ?>sb-admin.css" rel="stylesheet">
+    <link href="<?php echo base_url().CSSFOLDER; ?>jquery-ui.css" rel="stylesheet">        
     <link rel="stylesheet" href="<?php echo base_url().FONTSFOLDER;?>css/font-awesome.min.css">
 	<script type="text/javascript">var site_url = "<?php echo site_url(); ?>"; </script>
 	<script src="<?php echo base_url().JAVASCRIPTFOLDER; ?>jquery.min.js"></script>
+	<script src="<?php echo base_url().JAVASCRIPTFOLDER; ?>jquery-ui.js"></script>		
     <!-- Page Specific CSS -->
 </head>
 <body>
