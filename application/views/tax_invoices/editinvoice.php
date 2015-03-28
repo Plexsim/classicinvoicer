@@ -238,7 +238,7 @@
 					} else {
 					?>
 					<tr>
-					<td colspan="4">No payment has been made for this invoice.</td>
+					<td colspan="4">No payment has been made for this tax invoice.</td>
 					</tr>
 					<?php
 					}

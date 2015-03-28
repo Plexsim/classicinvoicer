@@ -20,7 +20,7 @@
         <div class="row">
           <div class="col-lg-12">
             <h3 class="pull-left">Tax Invoices</h3>
-			<a href="<?php echo $this->config->item('nav_base_url'); ?>tax_invoices/newinvoice" class="btn btn-large btn-success pull-right"><i class="fa fa-plus"> New Invoice </i></a>
+			<a href="<?php echo $this->config->item('nav_base_url'); ?>tax_invoices/newinvoice" class="btn btn-large btn-success pull-right"><i class="fa fa-plus"> New Tax Invoice </i></a>
           </div>
         </div><!-- /.row -->
 
@@ -28,7 +28,7 @@
           <div class="col-lg-12">
             <div class="panel panel-primary">
               <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-user"></i> List of Invoices</h3>
+                <h3 class="panel-title"><i class="fa fa-user"></i> List of Tax Invoices</h3>
               </div>
               <div class="panel-body">
                 <div class="table-responsive">
