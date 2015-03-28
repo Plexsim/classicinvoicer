@@ -27,7 +27,7 @@
         <ul class="dropdown-menu">
           <li><a href="<?php echo site_url('tax'); ?>"><i class="fa fa-euro"></i> Tax Rates </a></li>
           <li><a href="<?php echo site_url('users'); ?>"><i class="fa fa-user"></i> User Accounts </a></li>
-  <!--li><a href="<?php echo site_url('payment_methods'); ?>"><i class="fa fa-usd"></i> Payment Methods </a></li-->
+  		  <li><a href="<?php echo site_url('payment_methods'); ?>"><i class="fa fa-usd"></i> Payment Methods </a></li>
           <li class="divider"></li>
   <!--li><a href="<?php echo site_url('email_templates'); ?>"><i class="fa fa-envelope"></i> Email Templates </a></li>
           <li class="divider"></li-->

@@ -69,22 +69,21 @@
 						</div>
 						<div class="col-lg-6">
 							<div class="panel-default col-lg-12">
-							<!--div class="panel-body">
-							  <?php echo invoice_status($invoice_details->invoice_status); ?>
-							<div style="clear: both"></div>
-							<div class="form-group invoice_change_status pull-right">
-							<label>Change Status : </label>
-								<select class="form-control" name="invoice_status" id="invoice_status">
-								<option value="paid" <?php echo ($invoice_details->invoice_status == 'PAID') ? 'selected' : ''; ?>> PAID </option>
-								<option value="unpaid" <?php echo ($invoice_details->invoice_status == 'UNPAID') ? 'selected' : ''; ?>> UNPAID </option>
-								<option value="cancelled" <?php echo ($invoice_details->invoice_status == 'CANCELLED') ? 'selected' : ''; ?>> CANCELLED </option>
-								</select>
-							</div>	
-								
-							  </div-->
+							<div class="panel-body">
+							  	<?php echo invoice_status($invoice_details->invoice_status); ?>
+								<div style="clear: both"></div>
+								<div class="form-group invoice_change_status pull-right">
+								<label>Change Status : </label>
+									<select class="form-control" name="invoice_status" id="invoice_status">
+									<option value="paid" <?php echo ($invoice_details->invoice_status == 'PAID') ? 'selected' : ''; ?>> PAID </option>
+									<option value="unpaid" <?php echo ($invoice_details->invoice_status == 'UNPAID') ? 'selected' : ''; ?>> UNPAID </option>
+									<option value="cancelled" <?php echo ($invoice_details->invoice_status == 'CANCELLED') ? 'selected' : ''; ?>> CANCELLED </option>
+									</select>
+								</div>
+							  </div>
 							  <div class="invoice_actions pull-right">
 							  <div class="form-group">
-							  <!--a href="javascript: void(0);" onclick="enterTaxPayment('<?php echo $invoice_details->invoice_id; ?>')" class="btn btn-large btn-primary" id="bttn_enter_payment"><i class="fa fa-usd"></i> Enter Payment</a-->
+							  <a href="javascript: void(0);" onclick="enterTaxPayment('<?php echo $invoice_details->invoice_id; ?>')" class="btn btn-large btn-primary" id="bttn_enter_payment"><i class="fa fa-usd"></i> Enter Payment</a>
 							  <a href="javascript: void(0);" class="btn btn-large btn-info" id="bttn_view_pdf" onclick="viewTaxInvoice('<?php echo $invoice_details->invoice_id; ?>')"><i class="fa fa-search"></i> Preview Invoice </a>
 							  </div>
 							
@@ -212,7 +211,7 @@
 			
 			</table>
 			  
-			<!--h4> Payment History </h4> <hr/>
+			<h4> Payment History </h4> <hr/>
 			  <table class="table table-striped table-bordered">
 				<thead>
 					<tr class="table_header">
@@ -245,7 +244,7 @@
 					}
 					?>
 				</tbody>
-			</table-->
+			</table>
 				<hr/>		  
 			  <div class="form-group">
 			  <h4> Invoice Terms </h4> 
