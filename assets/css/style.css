@@ -359,6 +359,34 @@ table.tablesorter thead {
 
 @media print
 {    
+	
+	html, body {
+	    margin-top: 5000;
+	    padding-top: 5000;
+	}
+	
+	
+	
+	body {
+		font-family: Georgia, serif;
+		background: none;
+		color: black;
+		
+	}
+	
+
+	
+	#page {
+		width: 100%;
+		margin: 0;  
+		padding: 0;
+		background: none;
+	}
+	
+	head, #header, #menu-bar, #sidebar, h2#postcomment, form#commentform, #footer {
+		display: none;
+	}
+	
     .no-print, .no-print *
     {
         display: none !important;

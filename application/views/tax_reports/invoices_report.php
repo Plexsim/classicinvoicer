@@ -1,18 +1,3 @@
-
-<script type="text/javascript">
-    $(function()
-    {
-    	//var fd = Date.today().clearTime().moveToFirstDayOfMonth();
-    	//var firstday = fd.toString("dd-MM-yyyy");
-
-    	//var ld = Date.today().clearTime().moveToLastDayOfMonth();
-    	//var lastday = ld.toString("dd-MM-yyyy");
-    	
-  	  	//$('#from_date').val(firstDay);
-		//$('#to_date').val(lastDay);
-	});
-</script>
-
 <?php 
 	$logo = get_siteconfig('logo');
 	$name = get_siteconfig('name');
@@ -52,25 +37,25 @@
 	</tr>	
 	
 </table>	
-<hr class="print-display">
+<hr class="print-display" style="padding:0px;margin:0px;">
 <div class="row print-display">
 	<div class="col-lg-12">
 	<table width="100%">
 	<tr>
-		<td class="column_statement" colspan=2 align="center"><h2>STATEMENT OF ACCOUNT</h2></td>
+		<td class="column_statement" colspan=2 align="center"><h4>STATEMENT OF ACCOUNT</h4></td>
 	</tr>	
 	<tr>
 		<td class="column_statement"  width="70%">		
-			<p>Billed To : </p>
+			<p style="font-size:12px; line-height:0px;">Billed To : </p>
 			<span style="font-size:12px;font-weight: bold"><?php echo $invoices_report[0]['invoice_client']; ?> </span><span style="font-size:6px;"><?php echo isset($invoices_report[0]['client_ssm']) && !empty($invoices_report[0]['client_ssm']) ? '<span style="font-size:8px;">('.$invoices_report[0]['client_ssm'].')</span>' : ''; ?></span>			
-			<p><?php echo $invoices_report[0]['invoice_client_address']; ?></p>								
-			<p>TEL: <?php echo isset($invoices_report[0]['invoice_client_phone']) && !empty($invoices_report[0]['invoice_client_phone']) ? $invoices_report[0]['invoice_client_phone'] : '-'; ?>  FAX: <?php echo isset($invoices_report[0]['invoice_client_fax'])&&!empty($invoices_report[0]['invoice_client_fax']) ? $invoices_report[0]['invoice_client_fax'] : '-'; ?> </p>
-			<p><span style="font-weight: bold">GST ID No: <?php echo isset($invoices_report[0]['invoice_client_gst']) && !empty($invoices_report[0]['invoice_client_gst']) ? $invoices_report[0]['invoice_client_gst'] : '-'; ?></span></p>
-			<p>Attn:</p>																
+			<p style="font-size:11px;"><?php echo $invoices_report[0]['invoice_client_address']; ?></p>								
+			<p style="font-size:11px;line-height:5px;">TEL: <?php echo isset($invoices_report[0]['invoice_client_phone']) && !empty($invoices_report[0]['invoice_client_phone']) ? $invoices_report[0]['invoice_client_phone'] : '-'; ?>  FAX: <?php echo isset($invoices_report[0]['invoice_client_fax'])&&!empty($invoices_report[0]['invoice_client_fax']) ? $invoices_report[0]['invoice_client_fax'] : '-'; ?> </p>
+			<p style="font-size:11px;line-height:5px;"><span style="font-weight: bold">GST ID No: <?php echo isset($invoices_report[0]['invoice_client_gst']) && !empty($invoices_report[0]['invoice_client_gst']) ? $invoices_report[0]['invoice_client_gst'] : '-'; ?></span></p>
+			<p style="font-size:11px;line-height:5px;">Attn:</p>																
 		</td>				
 		<td class="column_statement" >		
-			<p>Invoice No. : <?php echo $invoices_report[0]['invoice_id']; ?></p>
-			<p>Date : <?php echo format_date($invoices_report[0]['invoice_date']); ?></p>			
+			<p style="font-size:11px;line-height:5px;">Invoice No. : <?php echo $invoices_report[0]['invoice_id']; ?></p>
+			<p style="font-size:11px;line-height:5px;">Date : <?php echo format_date($invoices_report[0]['invoice_date']); ?></p>			
 			<!--p>Page: of 1</p-->								
 		</td>		
 	</tr>
