@@ -32,6 +32,12 @@
                 <input class="form-control" name="client_name" value="<?php echo set_value('client_name');?>"/>
 				<?php echo form_error('client_name'); ?>
               </div>
+              
+        <div class="form-group">
+                <label>Client SSM</label>
+                <input class="form-control" name="client_ssm" value="<?php echo set_value('client_ssm');?>"/>
+				<?php echo form_error('client_ssm'); ?>
+         </div>      
 
         <div class="form-group">
           <label>Client Address</label>

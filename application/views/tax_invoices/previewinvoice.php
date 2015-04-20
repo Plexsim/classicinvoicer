@@ -44,7 +44,7 @@ $('html').click(function() {
 	<div class="client-details">
 		<div class="row">
 			<div class="col-lg-12">
-			<h4>Client : <?php echo $invoice_details['invoice_details']->client_name; ?></h4>
+			<span style="font-size:14px;font-weight: bold;">Client : <?php echo $invoice_details['invoice_details']->client_name; ?></span>  <span style="font-size:6px;"><?php echo isset($invoice_details['invoice_details']->client_ssm) && !empty($invoice_details['invoice_details']->client_ssm) ? '<span style="font-size:9px;">('.$invoice_details['invoice_details']->client_ssm.')</span>' : ''; ?></span>	
 			</div>
 		</div>
 		<div class="row">
@@ -52,7 +52,7 @@ $('html').click(function() {
 				<h5>Address&nbsp;&nbsp; : <?php echo $invoice_details['invoice_details']->client_address; ?></h5>
 				<h5>Phone &nbsp;&nbsp;&nbsp;&nbsp; : <?php echo $invoice_details['invoice_details']->client_phone; ?></h5>					
 				<h5>Email &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : <?php echo $invoice_details['invoice_details']->client_email; ?></h5>	
-				
+				<h5>GST &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : <?php echo isset($invoice_details['invoice_details']->client_gst) && !empty($invoice_details['invoice_details']->client_gst) ? $invoice_details['invoice_details']->client_gst : '-'; ?></h5>	
 			</div>
 			<div class="col-lg-6 text-right">
 			<h4><label> Total Amount Due </label></h4>

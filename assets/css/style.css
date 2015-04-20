@@ -353,3 +353,53 @@ table.tablesorter thead {
   }
 
 }
+.print-display{
+	display: none !important;
+}
+
+@media print
+{    
+    .no-print, .no-print *
+    {
+        display: none !important;
+    }
+    
+    .print-display
+    {
+        display: block !important;
+    }
+    
+    table {
+		border-collapse: collapse;
+		border-spacing: 0;
+		width:100%;
+		
+	}
+	
+	.table-title{
+		padding:0;	
+	}
+	.table-bordered td, .table-bordered th{
+		border: 1px solid #ddd;
+		padding: 8px;
+		border-collapse: collapse;	
+	}
+	.table-bordered th{
+		color: #000;
+	}
+	body {
+		font-size: 75%;
+	}
+	
+	.logo_table{
+		border-spacing: 0;
+	}
+}
+
+.column_logo{
+	padding: 2px !important;
+}
+
+.column_statement{
+	padding: 0px !important;
+}

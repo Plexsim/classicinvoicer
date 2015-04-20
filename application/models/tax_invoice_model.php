@@ -281,6 +281,7 @@
 	{
 		$invoices = $this->db->select('*')
 				 		->from('ci_tax_invoices')
+				 		->where('invoice_status', 'UNPAID')
 				 		->get()
 				 		->result_array();
 

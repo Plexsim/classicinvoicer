@@ -1,5 +1,9 @@
 body {
-background-color:#428bca;
+	background: url(../img/agriculture.jpg) no-repeat center center fixed;
+	-webkit-background-size: cover;
+  	-moz-background-size: cover;
+  	-o-background-size: cover;
+  	background-size: cover;
 }
 .login-box .input-prepend {
 margin-bottom: 10px;

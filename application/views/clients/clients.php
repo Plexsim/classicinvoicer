@@ -29,10 +29,10 @@
                     <thead>
                       <tr class="table_header">
                         <th>Client Name <i class="fa fa-sort"></i></th>
-                        <th>Address <i class="fa fa-sort"></i></th>
-                        <th>Email <i class="fa fa-sort"></i></th>
+                        <th>SSM <i class="fa fa-sort"></i></th>
+                        <th>Address <i class="fa fa-sort"></i></th>                        
 						<th>Telephone <i class="fa fa-sort"></i></th>
-                        <th>Country <i class="fa fa-sort"></i></th>
+                        <th>GST <i class="fa fa-sort"></i></th>
 						<th>Actions</th>
                       </tr>
                     </thead>
@@ -46,10 +46,10 @@
 						?>
 						<tr>
                         <td><?php echo ucwords($client['client_name']); ?></td>
-                        <td><?php echo $client['client_address']; ?></td>
-                        <td><?php echo $client['client_email']; ?></td>
+                        <td><?php echo isset($client['client_ssm']) && !empty($client['client_ssm']) ? $client['client_ssm'] : '-'; ?></td>
+                        <td><?php echo $client['client_address']; ?></td>                        
 						<td><?php echo $client['client_phone']; ?></td>
-                        <td><?php echo $countries[$client['client_country']]; ?></td>
+                        <td><?php echo isset($client['client_gst']) && !empty($client['client_gst']) ? $client['client_gst'] : '-';  ?></td>
 						<td>
 						<a href="<?php echo site_url('clients/editclient/'.$client['client_id']); ?>" class="btn btn-xs btn-success"><i class="fa fa-check"> Edit </i></a>
 						<a href="<?php echo site_url('clients/delete/'.$client['client_id']);?>" onclick="return confirm('If you delete this client you will also delete all their invoices and payments and you will not be able to recover the data later. Are you sure you want to permanently delete this client?');" class="btn btn-danger btn-xs"><i class="fa fa-times"> Delete </i></a>

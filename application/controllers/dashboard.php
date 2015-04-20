@@ -16,8 +16,9 @@ class Dashboard extends MY_Controller {
 		$data = array();
 		$data['title'] 			= $this->title;
 		$data['activemenu'] 	= $this->activemenu;
-		$data['invoice_stats']	= $this->invoice_model->invoice_stats();
+		//$data['invoice_stats']	= $this->invoice_model->invoice_stats();		
 		//$data['recent_invoices']= $this->invoice_model->recent_invoices();
+		$data['invoice_stats']	= $this->tax_invoice_model->invoice_stats();
 		$data['recent_tax_invoices']= $this->tax_invoice_model->recent_invoices();
 		
 		

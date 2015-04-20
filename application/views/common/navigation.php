@@ -20,6 +20,8 @@
       <!--li <?=(isset($activemenu) && $activemenu == 'quotes') ? 'class="active"' : ''?>><a href="<?php echo site_url('quotes');?>"><i class="fa fa-dashboard"></i> Quotes </a></li-->
       <li <?=(isset($activemenu) && $activemenu == 'products') ? 'class="active"' : ''?>><a href="<?php echo site_url('products'); ?>"><i class="fa fa-money"></i> Products </a></li>
       <!--li <?=(isset($activemenu) && $activemenu == 'reports') ? 'class="active"' : ''?>><a href="<?php echo site_url('reports'); ?>"><i class="fa fa-signal"></i> Reports </a></li-->
+      <li <?=(isset($activemenu) && $activemenu == 'tax_reports') ? 'class="active"' : ''?>><a href="<?php echo site_url('tax_reports'); ?>"><i class="fa fa-signal"></i> Tax Reports </a></li>
+      <!--li <?=(isset($activemenu) && $activemenu == 'statement') ? 'class="active"' : ''?>><a href="<?php echo site_url('statement'); ?>"><i class="fa fa-signal"></i> Client Statement </a></li-->
     </ul>
     <ul class="nav navbar-nav navbar-right navbar-user">
     <li class="dropdown user-dropdown">

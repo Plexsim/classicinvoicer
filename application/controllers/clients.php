@@ -44,6 +44,7 @@ class Clients extends MY_Controller {
 			$this->form_validation->set_rules('client_name', 'name', 'trim|required|xss_clean');
 			$this->form_validation->set_rules('client_address', 'address', 'trim|required|xss_clean');
 			$this->form_validation->set_rules('client_gst', 'gst', 'trim|xss_clean');
+			$this->form_validation->set_rules('client_ssm', 'ssm', 'trim|xss_clean');
 			$this->form_validation->set_rules('client_postalcode', 'address', 'trim|xss_clean');
 			$this->form_validation->set_rules('client_email', 'email', 'trim|valid_email|callback_email_exists|xss_clean');
 			$this->form_validation->set_rules('client_city', 'city', 'trim|required|xss_clean');
@@ -54,6 +55,7 @@ class Clients extends MY_Controller {
 			if($this->form_validation->run())
 			{
 				$client_details = array('client_name'		=> $this->input->post('client_name'),
+									  'client_ssm'			=> $this->input->post('client_ssm'),
 									  'client_address'		=> $this->input->post('client_address'),
 									  'postal_code'			=> $this->input->post('client_postalcode'),
 									  'client_city'			=> $this->input->post('client_city'),
@@ -82,8 +84,10 @@ class Clients extends MY_Controller {
 		$data = array();
 		if($this->input->post('editclientbtn'))
 		{
+					
 			$client_id = $this->input->post('client_id');
 			$this->form_validation->set_rules('client_name', 'name', 'trim|required|xss_clean');
+			$this->form_validation->set_rules('client_ssm', 'ssm', 'trim|xss_clean');
 			$this->form_validation->set_rules('client_address', 'address', 'trim|required|xss_clean');
 			$this->form_validation->set_rules('client_postalcode', 'address', 'trim|xss_clean');
 			$this->form_validation->set_rules('client_email', 'email', 'trim|valid_email|xss_clean');
@@ -102,6 +106,7 @@ class Clients extends MY_Controller {
 				else
 				{ */
 				$client_details = array('client_name'		=> $this->input->post('client_name'),
+									  'client_ssm'			=> $this->input->post('client_ssm'),
 									  'client_address'		=> $this->input->post('client_address'),
 									  'postal_code'		=> $this->input->post('client_postalcode'),
 									  'client_city'			=> $this->input->post('client_city'),

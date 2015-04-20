@@ -6,7 +6,7 @@
 		
 <!--div class="row"-->
 <!-- Total unpaid amount section -->
-<!--div class="col-lg-6">
+<div class="col-lg-12">
   <div class="panel panel-yellow">
       <div class="panel-heading">
           <h3 class="panel-title">Total unpaid amount</h3>
@@ -15,7 +15,7 @@
           <span class="pending_bal huge"><?php echo format_amount($invoice_stats['unpaid_amount'], true, 'before'); ?></span>
       </div>
   </div>
-</div-->
+</div>
 <!-- Total unpaid amount section -->
 <!--div class="col-lg-6">
       <div class="panel panel-red">
@@ -32,7 +32,7 @@
 
 
 
-        <!--div class="row">
+        <div class="row">
           <div class="col-lg-3">
             <div class="panel panel-primary">
               <div class="panel-heading">
@@ -47,7 +47,7 @@
                 </div>
               </div>
 			  <?php if($invoice_stats['all_invoices'] > 0){ ?>
-              <a href="<?php echo site_url('invoices');?>">
+              <a href="<?php echo site_url('tax_invoices');?>">
                 <div class="panel-footer announcement-bottom">
                   <div class="row">
                     <div class="col-xs-7">
@@ -76,7 +76,7 @@
                 </div>
               </div>
 			  <?php if($invoice_stats['unpaid_invoices'] > 0){ ?>
-              <a href="<?php echo site_url('invoices/index/unpaid');?>">
+              <a href="<?php echo site_url('tax_invoices/index/unpaid');?>">
                 <div class="panel-footer announcement-bottom">
                   <div class="row">
                     <div class="col-xs-9">
@@ -105,7 +105,7 @@
                 </div>
               </div>
 			  <?php if($invoice_stats['cancelled_invoices'] > 0){ ?>
-              <a href="<?php echo site_url('invoices/index/cancelled');?>">
+              <a href="<?php echo site_url('tax_invoices/index/cancelled');?>">
                 <div class="panel-footer announcement-bottom">
                   <div class="row">
                     <div class="col-xs-10">
@@ -134,7 +134,7 @@
                 </div>
               </div>
 			  <?php if($invoice_stats['paid_invoices'] > 0){?>
-              <a href="<?php echo site_url('invoices/index/paid');?>">
+              <a href="<?php echo site_url('tax_invoices/index/paid');?>">
                 <div class="panel-footer announcement-bottom">
                   <div class="row">
                     <div class="col-xs-8">
@@ -163,13 +163,13 @@
                    <table class="table table-bordered table-striped">
                     <thead>
                       <tr class="table_header">
-						            <!--th>Status</th-->
+						            <th>Status</th>
                         <th>Invoice No.</i></th>
                         <th>Date Issued</th>
 						         
 						            <th>Client Name</th>
                         <th class="text-right">Amount </th>
-						          
+						<th class="text-right">Amount Paid </th>     
                       </tr>
                     </thead>
                     <tbody>
@@ -180,7 +180,7 @@
 						{
 						?>
 						<tr>
-						<!--td>
+						<td>
 						
 						<?php 
 						if($invoice['invoice_status'] == 'PAID'){ $class='success'; } 
@@ -188,14 +188,14 @@
 						if($invoice['invoice_status'] == 'CANCELLED'){ $class='danger'; } 
 						?>
 						<span class="label label-<?php echo $class;?>"><?php echo $invoice['invoice_status'];?></span>
-						</td-->
+						</td>
             <td><a href="<?php echo site_url('invoices/edit/'.$invoice['invoice_id']);?>"><?php echo $invoice['invoice_number']; ?></a></td>
             <td><?php echo format_date($invoice['invoice_date_created']); ?></td>
 						
             <td><a href="<?php echo site_url('clients/editclient/'.$invoice['client_id']); ?>"><?php echo ucwords($invoice['client_name']); ?></a></td>
             <td class="text-right"><?php echo format_amount($invoice['invoice_amount']); ?></td>
 						
-						</td>
+						<td class="text-right"><?php echo format_amount($invoice['total_paid']);?></td>
 						</tr>
 						<?php
 						}

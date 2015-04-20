@@ -3,8 +3,8 @@
     {
         // Display the create invoice modal
         $('#modal-enter-payment').modal('show');
-		$('.date').datepicker( {autoclose: true, format: 'dd-mm-yyyy'} );
-		$(".date").datepicker("setDate", new Date());
+		//$('.date').datepicker( {autoclose: true, format: 'dd-mm-yyyy'} );
+		//$(".date").datepicker("setDate", new Date());
 		
 		$('#btn_add_payment').click(function()
         {
@@ -53,8 +53,9 @@
 			</div>
 			<label class="control-label">Payment Date: </label>
 			<div class="form-group input-group date" style="margin-left:0;">
-               <input size="16" type="text" name="payment_date" class="form-control" id="payment_date" readonly />
-                <span class="input-group-addon add-on"><i class="fa fa-calendar" style="display: inline"></i></span>
+               <input size="16" type="text" name="payment_date" class="form-control" id="payment_date" />
+               <span class="input-group-addon add-on"><i class="fa fa-calendar" style="display: inline"></i></span>
+               <input id="date_alt" type="hidden" name="issue_date" />
             </div>
 
 			<div class="control-group">
@@ -82,3 +83,10 @@
 	</div>
 	</div>
 </div>
+
+<script src="<?php echo base_url().JAVASCRIPTFOLDER; ?>bootstrap-datepicker.js"></script>
+<script>
+
+$('#payment_date').datepicker({dateFormat:'dd-mm-yy', altField: '#date_alt', altFormat: 'yy-mm-dd'});
+
+</script>

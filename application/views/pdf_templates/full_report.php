@@ -52,9 +52,9 @@ body {
 	<tr>	
 		<!--td>
 			<?php
-			 $class = ($invoice_details['invoice_details']->invoice_status == 'UNPAID') ? 'invoice_status_cancelled' : 'invoice_status_paid';
+			 $class = ($report_details['report_details']->invoice_status == 'UNPAID') ? 'invoice_status_cancelled' : 'invoice_status_paid';
 			  ?>
-			<div class="<?php echo $class; ?>"> <?php echo $invoice_details['invoice_details']->invoice_status; ?></div>
+			<div class="<?php echo $class; ?>"> <?php echo $report_details['report_details']->invoice_status; ?></div>
 		</td-->
 	</tr>	
 	<tr>			
@@ -82,15 +82,15 @@ body {
 	<tr>
 		<td width="70%">		
 			<p>Billed To : </p>
-			<span style="font-size:12px;font-weight: bold"><?php echo $invoice_details['invoice_details']->client_name; ?> </span><span style="font-size:6px;"><?php echo isset($invoice_details['invoice_details']->client_ssm) && !empty($invoice_details['invoice_details']->client_ssm) ? '<span style="font-size:8px;">('.$invoice_details['invoice_details']->client_ssm.')</span>' : ''; ?></span>			
-			<p><?php echo $invoice_details['invoice_details']->client_address; ?></p>								
-			<p>TEL: <?php echo isset($invoice_details['invoice_details']->client_phone) && !empty($invoice_details['invoice_details']->client_phone) ? $invoice_details['invoice_details']->client_phone : '-'; ?>  FAX: <?php echo isset($invoice_details['invoice_details']->client_fax)&&!empty($invoice_details['invoice_details']->client_fax) ? $invoice_details['invoice_details']->client_fax : '-'; ?> </p>
-			<p><span style="font-weight: bold">GST ID No: <?php echo isset($invoice_details['invoice_details']->client_gst) && !empty($invoice_details['invoice_details']->client_gst) ? $invoice_details['invoice_details']->client_gst : '-'; ?></span></p>
-			<p>Attn:</p>
+			<span style="font-size:12px;font-weight: bold"><?php echo $report_details['report_details']->client_name; ?> </span><span style="font-size:6px;"><?php echo isset($report_details['report_details']->client_ssm) && !empty($report_details['report_details']->client_ssm) ? '<span style="font-size:8px;">('.$report_details['report_details']->client_ssm.')</span>' : ''; ?></span>			
+			<p><?php echo $report_details['report_details']->client_address; ?></p>								
+			<p>TEL: <?php echo isset($report_details['report_details']->client_phone) && !empty($report_details['report_details']->client_phone) ? $report_details['report_details']->client_phone : '-'; ?>  FAX: <?php echo isset($report_details['report_details']->client_fax)&&!empty($report_details['report_details']->client_fax) ? $report_details['report_details']->client_fax : '-'; ?> </p>
+			<p><span style="font-weight: bold">GST ID No: <?php echo isset($report_details['report_details']->client_gst) && !empty($report_details['report_details']->client_gst) ? $report_details['report_details']->client_gst : '-'; ?></span></p>
+			<p>Attn:</p>																
 		</td>				
 		<td>		
-			<p>Invoice No. : <?php echo $invoice_details['invoice_details']->invoice_number; ?></p>
-			<p>Date : <?php echo format_date($invoice_details['invoice_details']->invoice_date_created); ?></p>			
+			<p>Invoice No. : <?php echo $report_details['report_details']->invoice_number; ?></p>
+			<p>Date : <?php echo format_date($report_details['report_details']->invoice_date_created); ?></p>			
 			<!--p>Page: of 1</p-->								
 		</td>		
 	</tr>
@@ -113,7 +113,7 @@ body {
 	</thead>
 	<tbody>
 	<?php
-	foreach ($invoice_details['invoice_items'] as $count=>$item)
+	foreach ($report_details['invoice_items'] as $count=>$item)
 	{?>
 	<tr class="transaction-row">
 	<td><?php echo $item['item_name'];?></td>
@@ -128,18 +128,18 @@ body {
 	}
 	?>
 	
-	<tr><td colspan="6" class="text-right">SUB TOTAL : </td><td class="text-right"><label><?php echo format_amount($invoice_details['invoice_totals']['item_total']);?></label></td></tr>
-	<tr><td colspan="6" class="text-right no-border">INVOICE DISCOUNT : </td><td class="text-right no-border"><label><?php echo format_amount($invoice_details['invoice_details']->invoice_discount);?></label></td></tr>
-	<tr><td colspan="6" class="text-right no-border">Total before @ 6% : </td><td class="text-right invoice_amount_paid"><label><?php echo format_amount($invoice_details['invoice_totals']['sub_total']);?></label></td></tr>		
-	<tr><td colspan="6" class="text-right no-border">Add GST @ 6% : </td><td class="text-right no-border"><label><?php echo format_amount($invoice_details['invoice_totals']['tax_total']);?></label></td></tr>	
-	<tr><td colspan="6" class="text-right no-border">Total Sales : </td><td class="text-right no-border invoice_amount_due"><label><?php echo format_amount( $invoice_details['invoice_totals']['item_total'] - $invoice_details['invoice_details']->invoice_discount + $invoice_details['invoice_totals']['tax_total']); ?></label></td></tr>
+	<tr><td colspan="6" class="text-right">SUB TOTAL : </td><td class="text-right"><label><?php echo format_amount($report_details['invoice_totals']['item_total']);?></label></td></tr>
+	<tr><td colspan="6" class="text-right no-border">INVOICE DISCOUNT : </td><td class="text-right no-border"><label><?php echo format_amount($report_details['report_details']->invoice_discount);?></label></td></tr>
+	<tr><td colspan="6" class="text-right no-border">Total before @ 6% : </td><td class="text-right invoice_amount_paid"><label><?php echo format_amount($report_details['invoice_totals']['sub_total']);?></label></td></tr>		
+	<tr><td colspan="6" class="text-right no-border">Add GST @ 6% : </td><td class="text-right no-border"><label><?php echo format_amount($report_details['invoice_totals']['tax_total']);?></label></td></tr>	
+	<tr><td colspan="6" class="text-right no-border">Total Sales : </td><td class="text-right no-border invoice_amount_due"><label><?php echo format_amount( $report_details['invoice_totals']['item_total'] - $report_details['report_details']->invoice_discount + $report_details['invoice_totals']['tax_total']); ?></label></td></tr>
 		
 	<tr class="table_header"><td colspan="7"></td></tr>
 </table>
 	
 	
 	<h4>Invoice Terms </h4>
-	<i><?php echo $invoice_details['invoice_details']->invoice_terms; ?></i>
+	<i><?php echo $report_details['report_details']->invoice_terms; ?></i>
 	<br/><br/>
 	
 	<table>
@@ -168,7 +168,7 @@ body {
 		</td>
 		
 		<td width="30%">
-			<label class="control-label">Client : <?php echo $invoice_details['invoice_details']->client_name; ?></label>
+			<label class="control-label">Client : <?php echo $report_details['report_details']->client_name; ?></label>
 			<br/><br/><br/>
 			................................................<br/>
 			<i>Signature &amp; Stamp</i>		
