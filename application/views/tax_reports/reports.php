@@ -112,6 +112,10 @@ function print_full_report()
 		});
 }
 
+
+
+
+
 //function to generate invoice full report
 function print_full_report_button()
 {

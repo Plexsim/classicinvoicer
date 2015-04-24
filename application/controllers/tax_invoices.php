@@ -386,13 +386,5 @@ class Tax_invoices extends MY_Controller {
 		$this->load->helper('pdf');
 		$pdf_invoice = generate_pdf_tax_invoice($invoice_details, true, NULL);
 	}
-	function view_full_report_pdf($client_id, $from_date, $to_date, $status)
-	{
-		$data 		  = array();
-		$data['title'] 	 = $this->title;	
-		$full_report_details = $this->tax_reports_model->invoices_full_report($client_id, $from_date, $to_date, $status);
-				
-		$this->load->helper('pdf');
-		$pdf_invoice = generate_pdf_full_report($full_report_details, true, NULL);
-	}
+
 }

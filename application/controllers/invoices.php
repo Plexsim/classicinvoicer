@@ -264,7 +264,7 @@ class Invoices extends MY_Controller {
 		$this->form_validation->set_rules('payment_amount', 'amount', 'trim|required|numeric|callback_amount_check|xss_clean');
 		$this->form_validation->set_rules('payment_method_id', 'payment method', 'trim|required|xss_clean');
 		$this->form_validation->set_rules('payment_date', 'payment date', 'trim|required|xss_clean');
-		$this->form_validation->set_rules('payment_note', 'payment note', 'trim|required|xss_clean');
+		$this->form_validation->set_rules('payment_note', 'payment note', 'trim|xss_clean');
 		$this->form_validation->set_error_delimiters('<p class="has-error"><label class="control-label">', '</label></p>');
 		if($this->form_validation->run())
 		{

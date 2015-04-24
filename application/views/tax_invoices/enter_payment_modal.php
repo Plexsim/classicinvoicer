@@ -87,6 +87,8 @@
 <script src="<?php echo base_url().JAVASCRIPTFOLDER; ?>bootstrap-datepicker.js"></script>
 <script>
 
-$('#payment_date').datepicker({dateFormat:'dd-mm-yy', altField: '#date_alt', altFormat: 'yy-mm-dd'});
+$('#payment_date').datepicker({
+	format: 'dd-mm-yyyy'	
+});
 
 </script>

@@ -107,7 +107,8 @@
 <div class="col-lg-2">
 	<label> </label>
 	<div class="form-group input-group" style="margin-left:0;">
-		<a href="javascript: void(0);" onclick="javascript: print_full_report_button();" class="btn btn-large btn-danger pull-right" id="bttn_print_invoice">Print This Page</a>	
+		<!--a href="javascript: void(0);" onclick="javascript: print_full_report_button();" class="btn btn-large btn-danger pull-right" id="bttn_print_invoice">Print This Page</a-->			
+		<a href="javascript: void(0);" onclick="javascript: ajax_print_full_report();" class="btn btn-large btn-danger pull-right" id="bttn_print_invoice">Download as PDF</a>
 	</div>
 </div>
 
@@ -117,10 +118,10 @@
 	<table class="table table-hover table-bordered ">
 	<thead>	 
 	  <tr class="table_header">
-		<th>STATUS</th>
+		<th class="no-print">STATUS</th>
 		<th>INVOICE NUMBER</th>
 		<th>DATE </th>
-		<th>CLIENT</th>
+		<th class="no-print">CLIENT</th>
 		<th class="text-right">AMOUNT</th>
 		<th class="no-print"></th>
 	  </tr>
@@ -136,22 +137,22 @@ if( isset($invoices_report) && !empty($invoices_report))
 	{
 	?>
 	  <tr class="transaction-row">
-		<td><?php echo status_label($invoice['invoice_status']);?></td>
+		<td class="no-print"><?php echo status_label($invoice['invoice_status']);?></td>
 		<td>
 			<div class="no-print">
 				<a href="<?php echo site_url('tax_invoices/edit/');?>/<?php echo $invoice['invoice_id'];?>"><?php echo $invoice['invoice_number'];?></a>
 			</div>
-			<div class="print-display">
+			<div class="print-display" style="font-size:14px;">
 				<?php echo $invoice['invoice_number'];?>
 			</div>			
 			
 		</td>
-		<td><?php echo format_date($invoice['invoice_date']);?></td>
-		<td><?php echo ucwords($invoice['invoice_client']);?></td>
+		<td style="font-size:12px;"><?php echo format_date($invoice['invoice_date']);?></td>
+		<td class="no-print"><?php echo ucwords($invoice['invoice_client']);?></td>
 		<?php 
 			$amount += $invoice['invoice_amount']; 		
 		?>
-		<td class="text-right"><?php echo format_amount($invoice['invoice_amount']); ?></td>
+		<td class="text-right" style="font-size:18px;"><?php echo format_amount($invoice['invoice_amount']); ?></td>
 		<td class="no-print">
 		<a id="view_button" href="<?php echo site_url('tax_invoices/edit/'.$invoice['invoice_id']);?>" class="btn btn-xs btn-primary"><i class="fa fa-check"> View / Edit </i></a>
 		</td>
@@ -163,7 +164,7 @@ if( isset($invoices_report) && !empty($invoices_report))
 	  <tr class="transaction-row">
 	  	<td colspan=3></td>
 	  	<td class="text-right">Total:</td>
-	  	<td class="text-right"><?php echo format_amount($amount) ?></td>
+	  	<td class="text-right" style="padding:0px; font-size:20px;"><?php echo format_amount($amount) ?></td>
 	  </tr>
 	
 <?php 	

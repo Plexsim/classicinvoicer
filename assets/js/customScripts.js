@@ -559,3 +559,34 @@ function insertTag(inputId, text) {
     }
     txtarea.scrollTop = scrollPos;
 }
+
+function ajax_print_full_report()
+{
+	var client = $('#client_id').val();
+	var from_date = $('#from_date').val();
+	var to_date = $('#to_date').val();
+	var status = $('#status').val();
+		
+	$('.loading').fadeIn('slow');
+
+	if(client == '')
+	{
+		alert('Please select a client to full report');
+		$('.loading').fadeOut('slow');
+	}
+	else if(from_date == '' && to_date == '')
+	{
+		alert('Please enter the date from and date to');
+		$('.loading').fadeOut('slow');
+	}
+	else if(status == '' )
+	{
+		alert('Please select status');
+		$('.loading').fadeOut('slow');
+	}
+	else
+	{
+		$('.loading').fadeOut('slow');
+		window.location.replace(site_url+"tax_reports/view_full_report_pdf?client_id="+ client + "&from_date="+from_date + "&to_date="+to_date+"&status="+status);
+	}
+}
