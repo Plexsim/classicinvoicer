@@ -53,7 +53,7 @@ function generate_pdf_full_report($full_report_data, $stream = TRUE)
 	
 	$client_name = isset($full_report_data[0]['invoice_client']) && !empty($full_report_data[0]['invoice_client']) ? $full_report_data[0]['invoice_client'] : 'EMPTY_CLIENT';
 	$client_date = isset($full_report_data[0]['invoice_date']) && !empty($full_report_data[0]['invoice_date']) ? $full_report_data[0]['invoice_date'] : 'NO_DATE';
-	$client_status = isset($full_report_data[0]['invoice_status']) && !empty($full_report_data[0]['invoice_status']) ? isset($full_report_data[0]['invoice_status']) : 'NO_STATUS';
+	$client_status = isset($full_report_data[0]['invoice_status']) && !empty($full_report_data[0]['invoice_status']) ? $full_report_data[0]['invoice_status'] : 'NO_STATUS';
 		
 	// statement name and month file
 	$filename = 'invoice_'.strtolower(trim(preg_replace('#\W+#', '_', $client_name.'_'.$client_date.'_'.$client_status) , '_'));
