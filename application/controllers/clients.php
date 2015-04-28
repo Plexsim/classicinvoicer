@@ -34,6 +34,17 @@ class Clients extends MY_Controller {
 		redirect('clients');
 	}
 /*---------------------------------------------------------------------------------------------------------
+ | Function to delete clients *Customisation*
+|----------------------------------------------------------------------------------------------------------*/
+public function delete_tax_client($client_id = 0)
+{
+	$data = array();
+	$this->clients_model->delete_tax_client($client_id);
+	$this->session->set_flashdata('success', 'Client has been deleted successfully !!');
+	redirect('clients');
+}	
+	
+/*---------------------------------------------------------------------------------------------------------
 | Function to create new client
 |----------------------------------------------------------------------------------------------------------*/
 	function createclient()

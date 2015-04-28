@@ -46,6 +46,10 @@ function viewTaxInvoice(invoice_id)
 {
 	$('#modal-placeholder').load(site_url+"tax_invoices/previewinvoice/" + invoice_id);
 }
+function viewCash(cash_id)
+{
+	$('#modal-placeholder').load(site_url+"cash_vouchers/previewcash/" + cash_id);
+}
 
 function viewQuote(quote_id)
 {
@@ -293,6 +297,55 @@ function ajax_save_tax_invoice()
 		if (response.success == '1') 
 		{
 			window.location = site_url+"tax_invoices";
+			//alert(objToString(response.item));
+		}
+		else {
+			alert(response.error);
+		}
+		$('.loading').fadeOut('slow');
+	});
+	}
+}
+
+function ajax_save_cash_voucher()
+{
+	var staff = $('#staff_to_cash').val();
+	var cash_date = $('#cash_date').val();
+	var cash_amount = $('#cash_amount').val();
+	var cash_terms = $('#cash_terms').val();
+	var cash_status = $('#cash_status').val();
+	var cash_number = $('#cash_number').val();
+	var cash_id = $('#cash_id').val();
+	var save_type  = $('#save_type').val();
+	$('.loading').fadeIn('slow');
+
+	if(staff == '')
+	{
+		alert('Please select a client to invoice');
+		$('.loading').fadeOut('slow');
+	}
+	else if(cash_date == '' )
+	{
+		alert('Please enter the cash date');
+		$('.loading').fadeOut('slow');
+	}	
+	else
+	{	
+	  $.post(site_url+"cash_vouchers/ajax_save_cash", {
+	  cash_staff : staff,
+	  cash_date : cash_date,
+	  cash_amount : cash_amount,
+	  cash_terms : cash_terms,
+	  cash_status : cash_status,
+	  cash_number : cash_number,
+	  cash_id 	: cash_id,
+	  save_type		: save_type	  
+	},
+	function(data_response) {
+		var response = JSON.parse(data_response);
+		if (response.success == '1') 
+		{
+			window.location = site_url+"cash_vouchers";
 			//alert(objToString(response.item));
 		}
 		else {

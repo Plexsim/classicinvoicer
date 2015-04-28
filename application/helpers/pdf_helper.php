@@ -78,3 +78,21 @@ function generate_pdf_quote($quote_data, $stream = TRUE)
 
     return pdf_create($html, $filename, $stream);
 }
+
+function generate_pdf_cash_voucher($cash_data, $stream = TRUE)
+{
+	$CI = & get_instance();
+
+	$data = array(
+			'cash_details'   => $cash_data,
+			'output_type'       => 'pdf'
+	);
+
+	$html = $CI->load->view('pdf_templates/cash_vouchers', $data, TRUE);
+
+	$CI->load->helper('mpdf');
+
+	$filename = 'cash_'.strtolower(trim(preg_replace('#\W+#', '_', $cash_data['cash_details']->cash_number), '_'));
+
+	return pdf_create($html, $filename , $stream);
+}

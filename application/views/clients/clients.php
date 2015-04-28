@@ -52,7 +52,7 @@
                         <td><?php echo isset($client['client_gst']) && !empty($client['client_gst']) ? $client['client_gst'] : '-';  ?></td>
 						<td>
 						<a href="<?php echo site_url('clients/editclient/'.$client['client_id']); ?>" class="btn btn-xs btn-success"><i class="fa fa-check"> Edit </i></a>
-						<a href="<?php echo site_url('clients/delete/'.$client['client_id']);?>" onclick="return confirm('If you delete this client you will also delete all their invoices and payments and you will not be able to recover the data later. Are you sure you want to permanently delete this client?');" class="btn btn-danger btn-xs"><i class="fa fa-times"> Delete </i></a>
+						<a href="<?php echo site_url('clients/delete_tax_client/'.$client['client_id']);?>" onclick="return confirm('If you delete this client you will also delete all their invoices and payments and you will not be able to recover the data later. Are you sure you want to permanently delete this client?');" class="btn btn-danger btn-xs"><i class="fa fa-times"> Delete </i></a>
 						</td>
 						</tr>
 						<?php

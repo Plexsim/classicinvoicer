@@ -11,7 +11,7 @@
 		<div class="well invoice_menu navbar navbar-fixed-top">
 			<a href="javascript: void(0);" class="btn btn-large btn-primary" id="bttn_add_item"><i class="fa fa-plus"></i> Add Item</a>
 			<a href="javascript: void(0);" class="btn btn-large btn-info" id="bttn_add_tax_product"><i class="fa fa-plus"></i> Add Item From Products</a>
-			<a href="javascript: void(0);" onclick="delete_invoice('<?php echo $invoice_details->invoice_id; ?>');" class="btn btn-large btn-danger pull-right" id="bttn_delete_invoice" ><i class="fa fa-times"></i> Delete Tax Invoice</a> 
+			<a href="javascript: void(0);" onclick="delete_tax_invoice('<?php echo $invoice_details->invoice_id; ?>');" class="btn btn-large btn-danger pull-right" id="bttn_delete_invoice" ><i class="fa fa-times"></i> Delete Tax Invoice</a> 
 			<a href="javascript: void(0);" onclick="javascript: ajax_save_tax_invoice();" class="btn btn-large btn-success pull-right"  style="margin-right:10px" id="bttn_save_invoice"><i class="fa fa-check"></i> Save Changes</a>
 			
 		</div>
@@ -62,7 +62,7 @@
 									<span class="input-group-addon add-on"><i class="fa fa-calendar" style="display: inline"></i></span>
 								</div-->
 								<div class="form-group">
-								<a href="javascript: void(0);" onclick="emailclient('<?php echo $invoice_details->invoice_id; ?>')" class="btn btn-large btn-success pull-right"  style="margin-right:10px"><i class="fa fa-envelope"></i> Email Invoice to Client </a>
+								<a href="javascript: void(0);" onclick="emailtaxclient('<?php echo $invoice_details->invoice_id; ?>')" class="btn btn-large btn-success pull-right"  style="margin-right:10px"><i class="fa fa-envelope"></i> Email Invoice to Client </a>
 								</div>
 							  </div>
 							</div>
