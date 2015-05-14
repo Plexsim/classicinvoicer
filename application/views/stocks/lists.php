@@ -1,9 +1,9 @@
  <script type="text/javascript">
 	    $(function() {
-			$('input:radio[name="invoice_status"]').change(function(){
+			$('input:radio[name="stock_status"]').change(function(){
 			$('.loading').fadeIn('slow');
 			var status = $(this).val();
-			$.post("<?php echo site_url('stocks/ajax_filter_invoices'); ?>", {
+			$.post("<?php echo site_url('stock/ajax_filter_stocks'); ?>", {
                 status: status,
             },
             function(data) {
@@ -45,9 +45,9 @@
 				<div class="well" style="background-color: #d9edf7;border-color: #bce8f1;color: #31708f;">
 					<div class="form-group" style="margin-bottom:0px">
 					<label> Filter : </label> &nbsp;&nbsp;
-					<label class="radio-inline"><input type="radio" name="stock_status" <?php echo ($status == 'all') ? 'checked' : ''; ?> id="allinvoices" value="all"> All</label>
-					<label class="radio-inline"><input type="radio" name="stock_status" <?php echo ($status == 'stock_in') ? 'checked' : ''; ?> id="paidinvoices" value="stock_in"> Stock In</label>
-					<label class="radio-inline"><input type="radio" name="stock_status" <?php echo ($status == 'stock_out') ? 'checked' : ''; ?> id="paidinvoices" value="stock_out"> Stock Out</label>					
+					<label class="radio-inline"><input type="radio" name="stock_status" <?php echo ($status == 'all') ? 'checked' : ''; ?> id="allstocks" value="all"> All</label>
+					<label class="radio-inline"><input type="radio" name="stock_status" <?php echo ($status == 'stock_in') ? 'checked' : ''; ?> id="instocks" value="stock_in"> Stock In</label>
+					<label class="radio-inline"><input type="radio" name="stock_status" <?php echo ($status == 'stock_out') ? 'checked' : ''; ?> id="outstocks" value="stock_out"> Stock Out</label>					
 					</div>
 				</div>
                   <table class="table table-bordered table-striped tablesorter">
