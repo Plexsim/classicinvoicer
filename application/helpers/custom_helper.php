@@ -194,6 +194,23 @@ function status_label($status = 'UNPAID'){
 	return $html;
 }
 
+function stock_status_label($status = 'STOCK_IN'){
+	$label_displayed = '';
+	if($status == 'STOCK_IN'){
+		$class = 'success';
+		$label_displayed = 'STOCK IN';
+	}
+	elseif ($status == 'STOCK_OUT'){
+		$class = 'warning';	
+		$label_displayed = 'STOCK OUT';
+	}
+	else
+		$class = 'warning';
+
+	$html = '<span class="label label-'. $class .' ">'.$label_displayed.'</span>';
+	return $html;
+}
+
 function send_email($subject  = '', $to = '',  $body = '', $attachment = ''){
 	$CI =& get_instance();
 

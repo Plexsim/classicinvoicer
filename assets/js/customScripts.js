@@ -356,6 +356,49 @@ function ajax_save_cash_voucher()
 	}
 }
 
+function ajax_save_stock()
+{
+	var stock_date = $('#stock_date').val();
+	var stock_terms = $('#stock_terms').val();
+	var stock_status = $('#stock_status').val();
+	var stock_number = $('#stock_number').val();
+	var stock_amount = $('#stock_amount').val();
+	var stock_id = $('#stock_id').val();
+	var save_type  = $('#save_type').val();
+	
+	$('.loading').fadeIn('slow');
+
+	if(stock_date == '')
+	{
+		alert('Please enter the stock date');
+		$('.loading').fadeOut('slow');
+	}
+	else
+	{	
+	  $.post(site_url+"stock/ajax_save_stock", {	  
+	  stock_date : stock_date,
+	  stock_terms : stock_terms,
+	  stock_status : stock_status,
+	  stock_number : stock_number,
+	  stock_amount : stock_amount,
+	  stock_id 	: stock_id,
+	  save_type		: save_type
+	},
+	function(data_response) {
+		var response = JSON.parse(data_response);
+		if (response.success == '1') 
+		{
+			window.location = site_url+"stock";
+			//alert(objToString(response.item));
+		}
+		else {
+			alert(response.error);
+		}
+		$('.loading').fadeOut('slow');
+	});
+	}
+}
+
 // function to save quotes
 function ajax_save_quote()
 {
@@ -485,6 +528,14 @@ function delete_tax_invoice (invoice_id)
 	if(confirm("Are you sure you want to permanently delete this tax invoice, you will not be able to undo this action"))
 	{
 		window.location = site_url+"tax_invoices/delete_invoice/"+invoice_id;
+	}
+}
+//function to delete an invoice
+function delete_stock(stock_id)
+{
+	if(confirm("Are you sure you want to permanently delete this stock, you will not be able to undo this action"))
+	{
+		window.location = site_url+"stock/delete_stock/"+stock_id;
 	}
 }
 //function to delete an invoice

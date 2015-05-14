@@ -58,9 +58,9 @@
 								
 								  <input type="hidden" name="cash_id" value="<?php echo $cash_details->cash_id; ?>" id="cash_id">
 								
-								<div class="form-group">
+								<!--div class="form-group">
 									<a href="javascript: void(0);" onclick="emailclient('<?php echo $cash_details->cash_id; ?>')" class="btn btn-large btn-success pull-right"  style="margin-right:10px"><i class="fa fa-envelope"></i> Email Cash to Staff </a>
-								</div>
+								</div-->
 							  </div>
 							</div>
 						</div>
@@ -79,9 +79,9 @@
 								</div>
 							  </div>
 							  <div class="invoice_actions pull-right">
-							  <div class="form-group">
+							  <!--div class="form-group">
 							  	<a href="javascript: void(0);" class="btn btn-large btn-info" id="bttn_view_pdf" onclick="viewCash('<?php echo $cash_details->cash_id; ?>')"><i class="fa fa-search"></i> Preview Cash Voucher </a>
-							  </div>
+							  </div-->
 							
 							  </div>
 							</div>
