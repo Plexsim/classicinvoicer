@@ -22,6 +22,39 @@
 		}
 		return $invoices;
 	}
+	
+	function get_invoices_date($from_date = '', $to_date = '', $client_id = '', $status = 'all')
+	{
+		$this->db->select('*');
+		$this->db->from('ci_tax_invoices');
+		$this->db->join('ci_clients', 'ci_clients.client_id = ci_tax_invoices.client_id');
+
+		if($from_date != '' && $to_date != '')
+		{
+			$this->db->where('ci_tax_invoices.invoice_date_created >=', date('Y-m-d', strtotime($from_date)));
+			$this->db->where('ci_tax_invoices.invoice_date_created <=', date('Y-m-d', strtotime($to_date)));
+		}
+		
+		if($status != 'all')
+		{
+			$this->db->where('ci_tax_invoices.invoice_status', $status);
+		}
+		
+		if($client_id != ''){
+			$this->db->where('ci_tax_invoices.client_id', $client_id);
+		}
+				
+		$this->db->order_by('invoice_id', 'DESC');
+		$invoices = $this->db->get()->result_array();
+		$invoice_amount = 0;
+		foreach($invoices as $invoice_count=>$invoice)
+		{
+			$invoice_totals = $this->get_invoice_total_amount($invoice['invoice_id']);
+			$invoices[$invoice_count]['invoice_amount'] = $invoice_totals['item_total'] + $invoice_totals['tax_total'] - $invoice['invoice_discount'];
+			$invoices[$invoice_count]['total_paid'] = $invoice_totals['amount_paid'];
+		}
+		return $invoices;
+	}
 	function invoice_stats()
 	{
 		$stats = array();

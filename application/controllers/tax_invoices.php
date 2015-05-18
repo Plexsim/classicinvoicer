@@ -14,13 +14,19 @@ class Tax_invoices extends MY_Controller {
 /*---------------------------------------------------------------------------------------------------------
 | Function to list tax invoices
 |----------------------------------------------------------------------------------------------------------*/
-	public function index($status = 'all')
+	public function index($status = 'all', $client_id = '', $from_date = '', $to_date = '')
 	{
 		$data = array();
 		$data['title'] 			= $this->title;
 		$data['activemenu'] 	= $this->activemenu;
 		$data['invoices']		= $this->tax_invoice_model->get_invoices($status);
+		$data['clients'] 		= $this->common_model->get_select_option('ci_clients', 'client_id', 'client_name', (isset($client_id) && !empty($client_id)) ? $client_id : '' );
 		$data['status']			= $status;
+		
+		$data['from_date'] = $from_date;
+		$data['to_date'] = $to_date;
+		$data['client_id'] = $client_id;		
+		
 		$data['pagecontent'] 	= 'tax_invoices/invoices';
 		$this->load->view('common/holder', $data);
 	}
@@ -207,10 +213,34 @@ class Tax_invoices extends MY_Controller {
 		$invoice_results 	= $this->load->view('tax_invoices/filtered_invoices', $data, true);
 		echo $invoice_results;
 	}
+	
+	function ajax_filter_invoices_date()
+	{
+		$data = array();
+		$from_date 		= $this->input->post('from_date');
+		$to_date 		= $this->input->post('to_date');
+		$invoice_status = $this->input->post('status');
+		$client_id 		= $this->input->post('client_id');
+		
+		$invoice_status = ($invoice_status != 'all' ) ? $invoice_status : 'all';
+		
+		
+		
+		$data['invoices']	= $this->tax_invoice_model->get_invoices_date($from_date, $to_date, $client_id, $invoice_status);
+		$data['from_date']	= $from_date != '' ? $from_date : '';
+		$data['to_date']	= $to_date != '' ? $to_date : '';
+		$data['status']		= $invoice_status;
+		$data['client_id']		= ($client_id != '' ) ? $client_id : '';				
+		
+		
+		$invoice_results 	= $this->load->view('tax_invoices/filtered_invoices', $data, true);
+		echo $invoice_results;
+	}
+
 /*---------------------------------------------------------------------------------------------------------
 | Function to edit invoice
 |----------------------------------------------------------------------------------------------------------*/
-	function edit($invoice_id = 0)
+	function edit($invoice_id = 0, $from_date = '', $to_date = '', $client_id = '', $status = 'all')
 	{
 		$data = array();
 		$data['title'] 			= $this->title;
@@ -218,6 +248,13 @@ class Tax_invoices extends MY_Controller {
 		$data['invoice_details']= $this->tax_invoice_model->get_invoice_data($invoice_id);
 		$data['invoice_items']	= $this->tax_invoice_model->get_invoice_items($invoice_id);
 		$data['invoice_payments']= $this->tax_invoice_model->get_invoice_payments($invoice_id);
+		
+		//for bring to listing to display back the record users keyed in before
+		$data['from_date'] = $from_date;
+		$data['to_date'] = $to_date;
+		$data['client_id'] = $client_id;
+		$data['status'] = $status;
+		
 		$data['clients'] 		= $this->common_model->get_select_option('ci_clients', 'client_id', 'client_name', $data['invoice_details']->client_id);
 		$data['taxrates'] 		= $this->common_model->get_select_option('ci_tax_rates', 'tax_rate_id', 'tax_rate_name', 1);
 		$data['pagecontent'] 	= 'tax_invoices/editinvoice';

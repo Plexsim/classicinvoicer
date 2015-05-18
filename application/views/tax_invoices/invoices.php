@@ -1,5 +1,8 @@
  <script type="text/javascript">
 	    $(function() {
+
+	    	invoice_onload();
+		    
 			$('input:radio[name="invoice_status"]').change(function(){
 			$('.loading').fadeIn('slow');
 			var status = $(this).val();
@@ -14,6 +17,114 @@
 			});
 			
 		});
+	    
+	    function filter_tax_invoices(){
+
+			var from_date = $('#from_date').val();
+	    	var to_date = $('#to_date').val();
+	    	var client_id = $('#client_id').val();
+	    	//var status = $('input:radio[name="invoice_status"]:checked').val();	   
+			var status = $('#status').val();
+		
+	    	$('.loading').fadeIn('slow');
+
+	    	if(from_date == '' && to_date == '')
+	    	{
+	    		alert('Please enter the date from and date to');
+	    		$('.loading').fadeOut('slow');
+	    	}
+	    	else
+	    	{
+	    		$('.loading').fadeOut('slow');
+
+	    		$.post("<?php echo site_url('tax_invoices/ajax_filter_invoices_date'); ?>", {
+	    			from_date: from_date,
+	    			to_date: to_date,
+	    			status: status,
+	    			client_id: client_id,
+	            },
+	            function(data) {
+		            
+	               $('#invoice_table_body').html(data);
+
+	               
+				   $('.loading').fadeOut('slow');
+	            });
+	    		
+	    	}
+
+	    }
+
+		// when startup first load, so no any checking empty criteria
+	    function invoice_onload(){
+
+			var from_date = $('#search_from_date').val();
+	    	var to_date = $('#search_to_date').val();
+	    	var client_id = $('#search_client_id').val();
+	    	//var status = $('input:radio[name="invoice_status"]:checked').val();	   
+			var status = $('#search_status').val();	    				
+			
+	    	$('.loading').fadeIn('slow');
+
+	    	
+    		$('.loading').fadeOut('slow');
+
+    		$.post("<?php echo site_url('tax_invoices/ajax_filter_invoices_date'); ?>", {
+    			from_date: from_date,
+    			to_date: to_date,
+    			status: status,
+    			client_id: client_id,
+            },
+            function(data) {
+	            
+               $('#invoice_table_body').html(data);
+               //var dataTable; //reference to your dataTable
+               //dataTable.fnReloadAjax("<?php echo site_url('tax_invoices/ajax_filter_invoices_date'); ?>");     
+               
+			   $('.loading').fadeOut('slow');
+            });
+	    		
+	    	
+
+	    }
+
+	 // when startup first load, so no any checking empty criteria
+	    function reset(){
+
+			var from_date = '';
+	    	var to_date = '';
+	    	var client_id = '';
+	    	var status = 'all';	  
+
+	    	$('#from_date').val("");
+	    	$('#to_date').val("");
+	    	$('#client_id').val("");
+	    	$('#status').val("all");  				
+			
+	    	$('.loading').fadeIn('slow');
+
+	    	
+    		$('.loading').fadeOut('slow');
+
+    		$.post("<?php echo site_url('tax_invoices/ajax_filter_invoices_date'); ?>", {
+    			from_date: from_date,
+    			to_date: to_date,
+    			status: status,
+    			client_id: client_id,
+            },
+            function(data) {
+	            
+               $('#invoice_table_body').html(data);
+               //var dataTable; //reference to your dataTable
+               //dataTable.fnReloadAjax("<?php echo site_url('tax_invoices/ajax_filter_invoices_date'); ?>");     
+               
+			   $('.loading').fadeOut('slow');
+            });
+
+	    }		   
+	        	    
+
+		
 </script>
 <div class="loading"></div>
 <div id="page-wrapper">
@@ -42,7 +153,7 @@
 				<?php
 				}
 				?>
-				<div class="well" style="background-color: #d9edf7;border-color: #bce8f1;color: #31708f;">
+				<!--div class="well" style="background-color: #d9edf7;border-color: #bce8f1;color: #31708f;">
 					<div class="form-group" style="margin-bottom:0px">
 					<label> Filter : </label> &nbsp;&nbsp;
 					<label class="radio-inline"><input type="radio" name="invoice_status" <?php echo ($status == 'all') ? 'checked' : ''; ?> id="allinvoices" value="all"> All Invoices</label>
@@ -50,8 +161,69 @@
 					<label class="radio-inline"><input type="radio" name="invoice_status" <?php echo ($status == 'unpaid') ? 'checked' : ''; ?> id="unpaidinvoices" value="unpaid"> Unpaid</label>
 					<label class="radio-inline"><input type="radio" name="invoice_status" <?php echo ($status == 'cancelled') ? 'checked' : ''; ?> id="cancelledinvoices" value="cancelled"> Cancelled</label>
 					</div>
+				</div-->
+				<label> Filter : </label> &nbsp;&nbsp;			
+				<div class="well" style="background-color: #d9edf7;border-color: #bce8f1;color: #31708f;">
+													
+					
+					<div class="row">
+					
+						<div class="col-lg-6">
+							<label>Date From : </label>
+							<div class="form-group input-group " style="margin-left:0;">
+								<input class="form-control" size="16" type="text" name="from_date" id="from_date" placeholder="From" value="<?php echo (isset($from_date) && !empty($from_date)) ? $from_date : ''?>"/>
+								<span class="input-group-addon add-on"><i class="fa fa-calendar" style="display: inline"></i></span>
+							</div>
+						</div>
+												
+						
+						<div class="col-lg-6">
+							<label>Date To : </label>
+							<div class="form-group input-group " style="margin-left:0;">
+								<input class="form-control" size="16" type="text" name="to_date" id="to_date" placeholder="To" value="<?php echo (isset($to_date) && !empty($to_date)) ? $to_date : ''?>"/>
+								<span class="input-group-addon add-on"><i class="fa fa-calendar" style="display: inline"></i></span>
+							</div>
+						</div>															
+						
 				</div>
-                  <table class="table table-bordered table-striped tablesorter">
+								
+					<div class="row">
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label>Client : </label>
+								<select name="client_id" id="client_id" class="form-control">
+								<?php echo $clients; ?>
+								</select>
+							</div>
+						</div>
+						<div class="col-lg-6">
+							<div class="form-group">
+								<label>Status : </label>
+								<select name="status" id="status" class="form-control">
+									<option value="all" <?php echo ($status == '') ? 'selected' : ''; ?>>ALL</option>
+									<option value="UNPAID" <?php echo ($status == 'UNPAID') ? 'selected' : ''; ?>>UNPAID</option>
+									<option value="PAID" <?php echo ($status == 'PAID') ? 'selected' : ''; ?>>PAID</option>
+									<option value="CANCELLED" <?php echo ($status == 'CANCELLED') ? 'selected' : ''; ?>>CANCELLED</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					
+					<div class="form-group input-group" style="margin-left:0;">
+					<a href="javascript: void(0);" onclick="javascript: reset();" class="btn btn-large btn-warning pull-right"  style="margin-right:10px" id="bttn_save_invoice"><i class="fa fa-check"></i> Reset </a>					
+					<a href="javascript: void(0);" onclick="javascript: filter_tax_invoices();" class="btn btn-large btn-success pull-right"  style="margin-right:10px" id="bttn_save_invoice"><i class="fa fa-check"></i> Generate Listing </a>
+					</div>
+								
+					<input type="hidden" value="<?php echo $from_date;?>" name="search_from_date" id="search_from_date">
+					<input type="hidden" value="<?php echo $to_date;?>" name="search_to_date" id="search_to_date">
+					<input type="hidden" value="<?php echo $client_id;?>" name="search_client_id" id="search_client_id">
+					<input type="hidden" value="<?php echo $status;?>" name="search_status" id="search_status">
+						
+																							
+				</div>
+				
+																				
+                  <table class="table table-bordered table-striped tablesorter" id="tax_invoice_table">
                     <thead>
                       <tr class="table_header">
 						<th>Status</th>
@@ -110,3 +282,12 @@
           </div>
         </div><!-- /.row -->
 </div><!-- /#page-wrapper -->
+
+<script>
+
+$('#from_date').datepicker({dateFormat:'dd-mm-yy', altField: '#date_alt', altFormat: 'yy-mm-dd'});
+$('#to_date').datepicker({dateFormat:'dd-mm-yy', altField: '#date_alt', altFormat: 'yy-mm-dd'});
+
+//$('#select_dateto').datepicker({dateFormat:'dd-mm-yy', altField: '#date_to_alt', altFormat: 'yy-mm-dd'});
+
+</script>

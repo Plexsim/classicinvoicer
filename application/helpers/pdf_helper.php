@@ -79,13 +79,14 @@ function generate_pdf_quote($quote_data, $stream = TRUE)
     return pdf_create($html, $filename, $stream);
 }
 
-function generate_pdf_cash_voucher($cash_data, $stream = TRUE)
+function generate_pdf_cash_voucher($cash_data, $stream = TRUE, $company = '')
 {
 	$CI = & get_instance();
 
 	$data = array(
 			'cash_details'   => $cash_data,
-			'output_type'       => 'pdf'
+			'output_type'       => 'pdf',
+			'company'		=> $company
 	);
 
 	$html = $CI->load->view('pdf_templates/cash_vouchers', $data, TRUE);

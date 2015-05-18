@@ -231,14 +231,14 @@ class Cash_vouchers extends MY_Controller {
 	}
 
 	
-	function viewpdf($cash_id)
+	function viewpdf($cash_id, $company)
 	{
 		$data 		  = array();
 		$data['title'] 	 = $this->title;
 		
 		$cash_details = $this->cash_voucher_model->previewcash($cash_id);
 		$this->load->helper('pdf');
-		$pdf_cash = generate_pdf_cash_voucher($cash_details, true, NULL);
+		$pdf_cash = generate_pdf_cash_voucher($cash_details, true, $company);
 	}
 
 }

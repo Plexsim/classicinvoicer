@@ -250,6 +250,12 @@ function ajax_save_tax_invoice()
 	var invoice_id = $('#invoice_id').val();
 	var save_type  = $('#save_type').val();
 	var invoice_discount_amount = $('#invoice_discount_amount').val();
+	
+	var filter_from_date = $('#search_from_date').val();
+	var filter_to_date = $('#search_to_date').val();
+	var filter_client_id = $('#search_client_id').val();
+	var filter_status = $('#search_status').val();
+	
 	$('.loading').fadeIn('slow');
 
 	if(client == '')
@@ -296,7 +302,7 @@ function ajax_save_tax_invoice()
 		var response = JSON.parse(data_response);
 		if (response.success == '1') 
 		{
-			window.location = site_url+"tax_invoices";
+			window.location = site_url+"tax_invoices" + "/index/" + filter_status + "/" + filter_client_id + "/" + filter_from_date + "/" + filter_to_date;
 			//alert(objToString(response.item));
 		}
 		else {
@@ -693,4 +699,14 @@ function ajax_print_full_report()
 		$('.loading').fadeOut('slow');
 		window.location.replace(site_url+"tax_reports/view_full_report_pdf?client_id="+ client + "&from_date="+from_date + "&to_date="+to_date+"&status="+status);
 	}
+}
+
+function ajax_print_cash_voucher(cash_id)
+{
+	var company = $('#company').val();	
+			
+	$('.loading').fadeIn('slow');
+	$('.loading').fadeOut('slow');
+	window.location.replace(site_url+"cash_vouchers/viewpdf/"+cash_id+"/"+company);
+	
 }

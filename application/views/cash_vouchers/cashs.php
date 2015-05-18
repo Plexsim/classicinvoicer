@@ -51,6 +51,20 @@
 					<label class="radio-inline"><input type="radio" name="cash_status" <?php echo ($status == 'cancelled') ? 'checked' : ''; ?> id="cancelledcashs" value="cancelled"> Cancelled</label>
 					</div>
 				</div>
+				
+				<div class="well" style="background-color: #d9edf7;border-color: #bce8f1;color: #31708f;">
+										
+					<div class="form-group" style="margin-bottom:0px">
+					<label> Company : </label> &nbsp;&nbsp;
+					<select class="form-control" name="company" id="company">
+						<option value="nick_fertilizer"> Nick Fertilizer </option>
+						<option value="home_grown"> Home Grown </option>						
+					</select>
+					</div>
+					
+				</div>
+				
+				
                   <table class="table table-bordered table-striped tablesorter">
                     <thead>
                       <tr class="table_header">
@@ -78,7 +92,8 @@
                         <td style="width:32%">
 						<a href="<?php echo site_url('cash_vouchers/edit/'.$cash['cash_id']);?>" class="btn btn-xs btn-primary"><i class="fa fa-check"> Edit </i></a>
 						<!--a href="javascript:;" class="btn btn-info btn-xs" onclick="viewCash('<?php echo $cash['cash_id']; ?>')"><i class="fa fa-search"> Preview </i></a-->
-						<a href="<?php echo site_url('cash_vouchers/viewpdf/'.$cash['cash_id']);?>" class="btn btn-warning btn-xs">Download pdf </a>
+						<!--a href="<?php echo site_url('cash_vouchers/viewpdf/'.$cash['cash_id']);?>" class="btn btn-warning btn-xs">Download pdf </a-->												
+						<a href="javascript: void(0);" onclick="javascript: ajax_print_cash_voucher('<?php echo $cash['cash_id']?>');" class="btn btn-warning pull-xs" id="bttn_print_cash">Download as PDF</a>
 						</td>
 						</tr>
 						<?php

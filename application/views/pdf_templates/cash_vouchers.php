@@ -23,16 +23,43 @@ body {
 </style>
 
 <?php 
-	$logo = get_siteconfig('logo');
-	$name = get_siteconfig('name');
-	$gst = get_siteconfig('gst');
-	$ssm = get_siteconfig('ssm');	
-	$address = get_siteconfig('address');
-	$postal_code = get_siteconfig('postal_code');
-	$phone = get_siteconfig('phone');
-	$fax = get_siteconfig('fax');	
-	$email = get_siteconfig('email');
-	$website = get_siteconfig('website');
+	
+	$logo;
+	$name;
+	$gst;
+	$ssm;
+	$address;
+	$postal_code;
+	$phone;
+	$fax;
+	$email;
+	$website;
+	
+	if($company == 'home_grown'){
+		$logo = 'home_grown.png';
+		$name = 'Home Grown';
+		$gst = '';
+		$ssm = 'IP0363924-D';
+		$address = 'No. 3, Taman Corina, 39010 Kg Raja, Cameron Highlands, Pahang, Malaysia';
+		$postal_code = '39010';
+		$phone = '019-5909138';
+		$fax = '';
+		$email = '';
+		$website = '';
+	}else{
+		$logo = get_siteconfig('logo');
+		$name = get_siteconfig('name');
+		$gst = get_siteconfig('gst');
+		$ssm = get_siteconfig('ssm');
+		$address = get_siteconfig('address');
+		$postal_code = get_siteconfig('postal_code');
+		$phone = get_siteconfig('phone');
+		$fax = get_siteconfig('fax');
+		$email = get_siteconfig('email');
+		$website = get_siteconfig('website');
+	}
+
+	
 ?>
 
 <div class="row">
@@ -61,7 +88,7 @@ body {
 		<td align="center" cellpadding="0" cellspacing="0" style="padding:0px; font-size:16px;"><?php echo $name ?> <span style="font-size:8px;">(<?php echo $ssm?>)</span></td>
 	</tr>
 	<tr>
-		<td align="center" cellpadding="0" cellspacing="0" style="padding:0px; font-size:13px; font-weight: bold;">GST ID No: <?php echo $gst ?></td>
+		<td align="center" cellpadding="0" cellspacing="0" style="padding:0px; font-size:13px; font-weight: bold;"> <?php echo (isset($gst) && !empty($gst)) ? 'GST ID No: '.$gst : ''?></td>
 	</tr>
 	<tr>
 		<td align="center" cellpadding="0" cellspacing="0" style="padding:0px; font-size:10px;"><span style="font-size:10px;"><?php echo $address ?></span></td>
