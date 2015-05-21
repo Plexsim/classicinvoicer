@@ -327,7 +327,7 @@ function ajax_save_cash_voucher()
 
 	if(staff == '')
 	{
-		alert('Please select a client to invoice');
+		alert('Please select a client to cash voucher');
 		$('.loading').fadeOut('slow');
 	}
 	else if(cash_date == '' )
@@ -352,6 +352,55 @@ function ajax_save_cash_voucher()
 		if (response.success == '1') 
 		{
 			window.location = site_url+"cash_vouchers";
+			//alert(objToString(response.item));
+		}
+		else {
+			alert(response.error);
+		}
+		$('.loading').fadeOut('slow');
+	});
+	}
+}
+
+function ajax_save_receipt()
+{
+	var client = $('#client_to_receipt').val();	
+	var receipt_date = $('#receipt_date').val();
+	var receipt_amount = $('#receipt_amount').val();
+	var receipt_terms = $('#receipt_terms').val();
+	var receipt_status = $('#receipt_status').val();
+	var receipt_number = $('#receipt_number').val();
+	var receipt_id = $('#receipt_id').val();
+	var save_type  = $('#save_type').val();
+	$('.loading').fadeIn('slow');
+
+	if(client == '')
+	{
+		alert('Please select a client to receipt');
+		$('.loading').fadeOut('slow');
+	}
+	else if(receipt_date == '' )
+	{
+		alert('Please enter the receipt date');
+		$('.loading').fadeOut('slow');
+	}	
+	else
+	{	
+	  $.post(site_url+"receipts/ajax_save_receipt", {
+	  receipt_client : client,
+	  receipt_date : receipt_date,
+	  receipt_amount : receipt_amount,
+	  receipt_terms : receipt_terms,
+	  receipt_status : receipt_status,
+	  receipt_number : receipt_number,
+	  receipt_id 	: receipt_id,
+	  save_type		: save_type	  
+	},
+	function(data_response) {
+		var response = JSON.parse(data_response);
+		if (response.success == '1') 
+		{
+			window.location = site_url+"receipts";
 			//alert(objToString(response.item));
 		}
 		else {
@@ -545,6 +594,22 @@ function delete_stock(stock_id)
 	}
 }
 //function to delete an invoice
+function delete_cash_voucher(cash_id)
+{
+	if(confirm("Are you sure you want to permanently delete this cash voucher, you will not be able to undo this action"))
+	{
+		window.location = site_url+"cash_vouchers/delete_cash/"+cash_id;
+	}
+}
+//function to delete an receipt
+function delete_receipt(receipt_id)
+{
+	if(confirm("Are you sure you want to permanently delete this receipt, you will not be able to undo this action"))
+	{
+		window.location = site_url+"receipts/delete_receipt/"+receipt_id;
+	}
+}
+//function to delete an invoice
 function delete_quote (quote_id)
 {
 	if(confirm("Are you sure you want to permanently delete this quote, you will not be able to undo this action"))
@@ -708,5 +773,15 @@ function ajax_print_cash_voucher(cash_id)
 	$('.loading').fadeIn('slow');
 	$('.loading').fadeOut('slow');
 	window.location.replace(site_url+"cash_vouchers/viewpdf/"+cash_id+"/"+company);
+	
+}
+
+function ajax_print_receipt(receipt_id)
+{
+	var company = $('#company').val();	
+			
+	$('.loading').fadeIn('slow');
+	$('.loading').fadeOut('slow');
+	window.location.replace(site_url+"receipts/viewpdf/"+receipt_id+"/"+company);
 	
 }

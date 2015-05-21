@@ -1,76 +1,76 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Cash_vouchers extends MY_Controller {
+class Receipts extends MY_Controller {
 
-	protected $title 		= 'Cash Vouchers';
-	protected $activemenu 	= 'cash_vouchers';
+	protected $title 		= 'Receipts';
+	protected $activemenu 	= 'receipts';
 	
 	public function __construct()
 	{
 		parent::__construct();
 		is_logged_in();
-		$this->load->model('cash_voucher_model');
+		$this->load->model('receipt_model');
 	}
 /*---------------------------------------------------------------------------------------------------------
-| Function to list cash voucher
+| Function to list receipt
 |----------------------------------------------------------------------------------------------------------*/
 	public function index($status = 'all')
 	{
 		$data = array();
 		$data['title'] 			= $this->title;
 		$data['activemenu'] 	= $this->activemenu;
-		$data['cashs']			= $this->cash_voucher_model->get_cashs($status);
+		$data['receipts']			= $this->receipt_model->get_receipts($status);
 		$data['status']			= $status;
-		$data['pagecontent'] 	= 'cash_vouchers/cashs';
+		$data['pagecontent'] 	= 'receipts/receipts';
 		$this->load->view('common/holder', $data);
 	}
 /*---------------------------------------------------------------------------------------------------------
 | Function to create new invoice
 |----------------------------------------------------------------------------------------------------------*/
-	public function newcash()
+	public function newreceipt()
 	{
 		$data = array();
 		$data['title'] 			= $this->title;
 		$data['activemenu'] 	= $this->activemenu;
-		$data['staffs'] 		= $this->common_model->get_select_option('ci_staffs', 'staff_id', 'staff_name');
-		$data['cash_number']	= $this->generate_cash_number();
-		$data['pagecontent'] 	= 'cash_vouchers/newcash';
+		$data['clients'] 		= $this->common_model->get_select_option('ci_clients', 'client_id', 'client_name');
+		$data['receipt_number']	= $this->generate_receipt_number();
+		$data['pagecontent'] 	= 'receipts/newreceipt';
 		$this->load->view('common/holder', $data);
 	}
 
 /*---------------------------------------------------------------------------------------------------------
 | Function to save new invoice
 |----------------------------------------------------------------------------------------------------------*/
-	function ajax_save_cash()
+	function ajax_save_receipt()
 	{		
-		$cash_number = $this->input->post('cash_number');
-		$cash_id = $this->input->post('cash_id');
+		$receipt_number = $this->input->post('receipt_number');
+		$receipt_id = $this->input->post('receipt_id');
 		$save_type = $this->input->post('save_type');
 		
-			$valid = $this->cash_voucher_model->validate_cash_num($cash_number, $cash_id);
+			$valid = $this->receipt_model->validate_receipt_num($receipt_number, $receipt_id);
 			
 			if($valid){
 
 				if($save_type == 'new'){
-						$cash_details = array('user_id' 				=> $this->session->userdata('user_id'),
-												 'staff_id' 			=> $this->input->post('cash_staff'),
-												 'cash_amount' 			=> $this->input->post('cash_amount'),
-												 'cash_number' 		=> $cash_number,
-												 'cash_terms' 		=> $this->input->post('cash_terms'),
-												 'cash_date_created' => date('Y-m-d', strtotime($this->input->post('cash_date'))),
+						$receipt_details = array('user_id' 				=> $this->session->userdata('user_id'),
+												 'client_id' 			=> $this->input->post('receipt_client'),
+												 'receipt_amount' 			=> $this->input->post('receipt_amount'),
+												 'receipt_number' 		=> $receipt_number,
+												 'receipt_terms' 		=> $this->input->post('receipt_terms'),
+												 'receipt_date_created' => date('Y-m-d', strtotime($this->input->post('receipt_date'))),
 												);
-						$cash_id = $this->common_model->saverecord('ci_cash_vouchers', $cash_details);
+						$receipt_id = $this->common_model->saverecord('ci_receipts', $receipt_details);
 				}
 				else
 				{
-						$cash_details = array('staff_id' 			=> $this->input->post('cash_staff'),
-												 'cash_terms' 		=> $this->input->post('cash_terms'),
-												 'cash_amount' 			=> $this->input->post('cash_amount'),
-												 'cash_number' 		=> $cash_number,
-												 'cash_status' 		=> $this->input->post('cash_status'),
-												 'cash_date_created' => date('Y-m-d', strtotime($this->input->post('cash_date'))),
+						$receipt_details = array('client_id' 			=> $this->input->post('receipt_client'),
+												 'receipt_terms' 		=> $this->input->post('receipt_terms'),
+												 'receipt_amount' 			=> $this->input->post('receipt_amount'),
+												 'receipt_number' 		=> $receipt_number,
+												 'receipt_status' 		=> $this->input->post('receipt_status'),
+												 'receipt_date_created' => date('Y-m-d', strtotime($this->input->post('receipt_date'))),
 											);
-						$this->common_model->update_records('ci_cash_vouchers', 'cash_id', $cash_id, $cash_details);
+						$this->common_model->update_records('ci_receipts', 'receipt_id', $receipt_id, $receipt_details);
 				}
 				
 				$response = array(
@@ -80,7 +80,7 @@ class Cash_vouchers extends MY_Controller {
 			else{
 				$response = array(
 	                'success'           => 0,
-	                'error'  			=> 'The cash number already exists for another cash',
+	                'error'  			=> 'The receipt number already exists for another receipt',
             	);
 			}
 
@@ -89,65 +89,65 @@ class Cash_vouchers extends MY_Controller {
 		echo json_encode($response);	
 	}
 /*---------------------------------------------------------------------------------------------------------
-| Function to generate cash numbers
+| Function to generate receipt numbers
 |----------------------------------------------------------------------------------------------------------*/
-	function generate_cash_number()
+	function generate_receipt_number()
 	{
-		$last_cash_id = $this->common_model->get_last_id('ci_cash_vouchers', 'cash_id') + 1;
-		return $last_cash_id;
+		$last_receipt_id = $this->common_model->get_last_id('ci_receipts', 'receipt_id') + 1;
+		return $last_receipt_id;
 	}
 /*---------------------------------------------------------------------------------------------------------
-| Function to filter cash_vouchers
+| Function to filter receipts
 |----------------------------------------------------------------------------------------------------------*/
-	function ajax_filter_cashs()
+	function ajax_filter_receipts()
 	{
 		$data = array();
-		$cash_status 	= $this->input->post('status');
-		$data['cashs']	= $this->cash_voucher_model->get_cashs($cash_status);
-		$data['status']		= ($cash_status != 'all' ) ? $cash_status : '';	
-		$cash_results 	= $this->load->view('cash_vouchers/filtered_cashs', $data, true);
-		echo $cash_results;
+		$receipt_status 	= $this->input->post('status');
+		$data['receipts']	= $this->receipt_model->get_receipts($receipt_status);
+		$data['status']		= ($receipt_status != 'all' ) ? $receipt_status : '';	
+		$receipt_results 	= $this->load->view('receipts/filtered_receipts', $data, true);
+		echo $receipt_results;
 	}
 /*---------------------------------------------------------------------------------------------------------
-| Function to edit cash
+| Function to edit receipt
 |----------------------------------------------------------------------------------------------------------*/
-	function edit($cash_id = 0)
+	function edit($receipt_id = 0)
 	{
 		$data = array();
 		$data['title'] 			= $this->title;
 		$data['activemenu'] 	= $this->activemenu;
-		$data['cash_details']= $this->cash_voucher_model->get_cash_data($cash_id);
-		$data['staffs'] 		= $this->common_model->get_select_option('ci_staffs', 'staff_id', 'staff_name', $data['cash_details']->staff_id);
-		$data['pagecontent'] 	= 'cash_vouchers/editcash';
+		$data['receipt_details']= $this->receipt_model->get_receipt_data($receipt_id);
+		$data['clients'] 		= $this->common_model->get_select_option('ci_clients', 'client_id', 'client_name', $data['receipt_details']->client_id);
+		$data['pagecontent'] 	= 'receipts/editreceipt';
 		$this->load->view('common/holder', $data);
 	}
 /*---------------------------------------------------------------------------------------------------------
-| Function to display products to be added in cash 
+| Function to display products to be added in receipt 
 |----------------------------------------------------------------------------------------------------------*/	
 	function items_from_products()
 	{
 		$data = array();
 		$data['products'] = $this->common_model->db_select('ci_products');
-		$this->load->view('cash_vouchers/products_modal', $data);
+		$this->load->view('receipts/products_modal', $data);
 	}
 /*---------------------------------------------------------------------------------------------------------
-| Function to delete an cash 
+| Function to delete an receipt 
 |----------------------------------------------------------------------------------------------------------*/	
-	function delete_cash($cash_id = 0)
+	function delete_receipt($receipt_id = 0)
 	{
-		$this->cash_voucher_model->delete_cash($cash_id);
-		$this->session->set_flashdata('success', 'The cash has been deleted successfully !!');
-		redirect('cash_vouchers');
+		$this->receipt_model->delete_receipt($receipt_id);
+		$this->session->set_flashdata('success', 'The receipt has been deleted successfully !!');
+		redirect('receipts');
 	}
 /*---------------------------------------------------------------------------------------------------------
-| Function to enter payment for an cash 
+| Function to enter payment for an receipt 
 |----------------------------------------------------------------------------------------------------------*/	
-	function enter_payment($cash_id = 0)
+	function enter_payment($receipt_id = 0)
 	{
 		$data = array();
-		$data['cash'] 			= $this->cash_voucher_model->get_cash_details($cash_id);
+		$data['receipt'] 			= $this->receipt_model->get_receipt_details($receipt_id);
 		$data['payment_methods'] 	= $this->common_model->get_select_option('ci_payment_methods', 'payment_method_id', 'payment_method_name');
-		$this->load->view('cash_vouchers/enter_payment_modal', $data);
+		$this->load->view('receipts/enter_payment_modal', $data);
 	}
 	function addpayment()
 	{
@@ -162,14 +162,14 @@ class Cash_vouchers extends MY_Controller {
 				$this->form_validation->set_message('required', 'amount');
 			}
 			else{
-			$cash_id = $this->input->post('cash_id');
-			$payment_details = array('cash_id'		=> $this->input->post('cash_id'),
+			$receipt_id = $this->input->post('receipt_id');
+			$payment_details = array('receipt_id'		=> $this->input->post('receipt_id'),
 								  'payment_amount'		=> $this->input->post('payment_amount'),
 								  'payment_method_id'	=> $this->input->post('payment_method_id'),
 								  'payment_date'		=> date('Y-m-d', strtotime($this->input->post('payment_date'))),
 								  'payment_note'		=> $this->input->post('payment_note'),
 								 );
-			$this->cash_voucher_model->addpayment($cash_id, $payment_details);
+			$this->receipt_model->addpayment($receipt_id, $payment_details);
 			$this->session->set_flashdata('success', 'Payment has been added successfully !!');
 			$response = array(
 					'success'           => 1
@@ -200,36 +200,36 @@ class Cash_vouchers extends MY_Controller {
 		}
 	}
 /*---------------------------------------------------------------------------------------------------------
-| Function to preview an cash
+| Function to preview an receipt
 |----------------------------------------------------------------------------------------------------------*/	
-	function previewcash($cash_id = 0)
+	function previewreceipt($receipt_id = 0)
 	{
 		$data 						= array();
 		$data['title'] 				= $this->title;
-		$data['cash_details']	= $this->cash_voucher_model->previewcash($cash_id);
-		$this->load->view('cash_vouchers/previewcash', $data);
+		$data['receipt_details']	= $this->receipt_model->previewreceipt($receipt_id);
+		$this->load->view('receipts/previewreceipt', $data);
 	}
 /*---------------------------------------------------------------------------------------------------------
-| Function to send cash to client
+| Function to send receipt to client
 |----------------------------------------------------------------------------------------------------------*/	
-	function emailclient($cash_id = 0)
+	function emailclient($receipt_id = 0)
 	{
 		$data 						= array();
 		$data['title'] 				= $this->title;
-		$data['cash_details']	= $this->cash_voucher_model->get_cash_details($cash_id);
+		$data['receipt_details']	= $this->receipt_model->get_receipt_details($receipt_id);
 		$data['email_templates'] 	= $this->common_model->get_select_option('ci_email_templates', 'template_id', 'template_title');
-		$this->load->view('cash_vouchers/emailclient', $data);
+		$this->load->view('receipts/emailclient', $data);
 	}
 
 	
-	function viewpdf($cash_id, $company)
+	function viewpdf($receipt_id, $company)
 	{
 		$data 		  = array();
 		$data['title'] 	 = $this->title;
 		
-		$cash_details = $this->cash_voucher_model->previewcash($cash_id);
+		$receipt_details = $this->receipt_model->previewreceipt($receipt_id);
 		$this->load->helper('pdf');
-		$pdf_cash = generate_pdf_cash_voucher($cash_details, true, $company);
+		$pdf_receipt = generate_pdf_receipt($receipt_details, true, $company);
 	}
 
 }

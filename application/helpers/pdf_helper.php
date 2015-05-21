@@ -97,3 +97,22 @@ function generate_pdf_cash_voucher($cash_data, $stream = TRUE, $company = '')
 
 	return pdf_create($html, $filename , $stream);
 }
+
+function generate_pdf_receipt($receipt_data, $stream = TRUE, $company = '')
+{
+	$CI = & get_instance();
+
+	$data = array(
+			'receipt_details'   => $receipt_data,
+			'output_type'       => 'pdf',
+			'company'		=> $company
+	);
+
+	$html = $CI->load->view('pdf_templates/receipts', $data, TRUE);
+
+	$CI->load->helper('mpdf');
+
+	$filename = 'receipt_'.strtolower(trim(preg_replace('#\W+#', '_', $receipt_data['receipt_details']->receipt_number), '_'));
+
+	return pdf_create($html, $filename , $stream);
+}
