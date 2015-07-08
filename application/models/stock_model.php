@@ -2,14 +2,20 @@
 class Stock_model extends CI_Model 
 {
 
-	function get_stocks($status = 'all')
+	function get_stocks($status = 'all', $from_date = '', $to_date = '')
 	{
 		$this->db->select('*');
-		$this->db->from('ci_stocks');
+		$this->db->from('ci_stocks');			
+		
 		if($status != 'all')
 		{
 			$this->db->where('ci_stocks.stock_status', $status);
 		}		
+		if($from_date != '' && $to_date != '')
+		{
+			$this->db->where('stock_date_created >=', date('Y-m-d', strtotime($from_date)));
+			$this->db->where('stock_date_created <=', date('Y-m-d', strtotime($to_date)));
+		}						
 		$this->db->order_by('stock_id', 'DESC');
 		$stocks = $this->db->get()->result_array();
 

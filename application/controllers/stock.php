@@ -49,7 +49,7 @@ class Stock extends MY_Controller {
 /*---------------------------------------------------------------------------------------------------------
 | Function to filter stocks
 |----------------------------------------------------------------------------------------------------------*/
-	function ajax_filter_stocks()
+/* 	function ajax_filter_stocks()
 	{
 		$data = array();
 		$stock_status 	= $this->input->post('status');
@@ -57,7 +57,34 @@ class Stock extends MY_Controller {
 		$data['status']		= ($stock_status != 'all' ) ? $stock_status : '';	
 		$stock_results 	= $this->load->view('stocks/filtered_stocks', $data, true);
 		echo $stock_results;
-	}
+	} */
+
+/*---------------------------------------------------------------------------------------------------------
+| Function to display invoices report
+|----------------------------------------------------------------------------------------------------------*/
+	function ajax_filter_stocks()
+	{
+		$data = array();
+		$stock_status 			= $this->input->post('stock_status');
+		$from_date 				= $this->input->post('from_date');
+		$to_date 				= $this->input->post('to_date');
+	
+		//$data['status']		= ($stock_status != 'all' ) ? $stock_status : '';
+		//$data['from_date']	= $from_date;
+		//$data['to_date']	= $to_date;
+		//$stock_status = 'all';
+		
+		//$from_date = '1-4-2015';
+		//$to_date   = '31-7-2015';
+	
+		$data['stocks']			= $this->stock_model->get_stocks($stock_status, $from_date, $to_date, true);
+		//echo var_dump($data['stocks']);
+		//die();
+		$invoices_report 		= $this->load->view('stocks/stock_list', $data, true);
+		echo $invoices_report;
+	}	
+	
+	
 /*---------------------------------------------------------------------------------------------------------
 | Function to edit stock
 |----------------------------------------------------------------------------------------------------------*/
@@ -144,5 +171,7 @@ class Stock extends MY_Controller {
 		
 		echo json_encode($response);
 	}
+	
+
 
 }
