@@ -38,7 +38,7 @@
 $db['default']['hostname'] = "localhost";
 $db['default']['username'] = "root";
 $db['default']['password'] = "";
-$db['default']['database'] = "classicinvoicer";
+$db['default']['database'] = "classic_new";
 
 // The following values can probably stay the same.
 $db['default']['dbdriver'] = "mysql";

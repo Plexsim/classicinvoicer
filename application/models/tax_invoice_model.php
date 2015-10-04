@@ -40,7 +40,7 @@
 			$this->db->where('ci_tax_invoices.invoice_status', $status);
 		}
 		
-		if($client_id != ''){
+		if($client_id != '' && $client_id != 'all'){
 			$this->db->where('ci_tax_invoices.client_id', $client_id);
 		}
 				

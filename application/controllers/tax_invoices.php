@@ -14,15 +14,21 @@ class Tax_invoices extends MY_Controller {
 /*---------------------------------------------------------------------------------------------------------
 | Function to list tax invoices
 |----------------------------------------------------------------------------------------------------------*/
-	public function index($status = 'all', $client_id = '', $from_date = '', $to_date = '')
+	public function index()
 	{
 		$data = array();
+				
+		$from_date = $this->input->get('from_date');
+		$to_date = $this->input->get('to_date');
+		$client_id = $this->input->get('client_id');
+		$status = $this->input->get('status');
+		
 		$data['title'] 			= $this->title;
 		$data['activemenu'] 	= $this->activemenu;
 		$data['invoices']		= $this->tax_invoice_model->get_invoices($status);
 		$data['clients'] 		= $this->common_model->get_select_option('ci_clients', 'client_id', 'client_name', (isset($client_id) && !empty($client_id)) ? $client_id : '' );
-		$data['status']			= $status;
 		
+		$data['status']			= $status;		
 		$data['from_date'] = $from_date;
 		$data['to_date'] = $to_date;
 		$data['client_id'] = $client_id;		
@@ -240,14 +246,25 @@ class Tax_invoices extends MY_Controller {
 /*---------------------------------------------------------------------------------------------------------
 | Function to edit invoice
 |----------------------------------------------------------------------------------------------------------*/
-	function edit($invoice_id = 0, $from_date = '', $to_date = '', $client_id = '', $status = 'all')
+	function edit()
 	{
 		$data = array();
+		
+		$invoice_id = $this->input->get('invoice_id');
+		$from_date = $this->input->get('from_date');
+		$to_date = $this->input->get('to_date');
+		$client_id = $this->input->get('client_id');
+		$status = $this->input->get('status');
+		
 		$data['title'] 			= $this->title;
 		$data['activemenu'] 	= $this->activemenu;
 		$data['invoice_details']= $this->tax_invoice_model->get_invoice_data($invoice_id);
 		$data['invoice_items']	= $this->tax_invoice_model->get_invoice_items($invoice_id);
 		$data['invoice_payments']= $this->tax_invoice_model->get_invoice_payments($invoice_id);
+		
+		/* if($from_date == 'all' || $from_date == 'UNPAID' || $from_date == 'PAID' || $from_date == 'CANCELLED'){
+			$from_date = '';
+		} */
 		
 		//for bring to listing to display back the record users keyed in before
 		$data['from_date'] = $from_date;

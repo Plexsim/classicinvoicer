@@ -302,7 +302,7 @@ function ajax_save_tax_invoice()
 		var response = JSON.parse(data_response);
 		if (response.success == '1') 
 		{
-			window.location = site_url+"tax_invoices" + "/index/" + filter_status + "/" + filter_client_id + "/" + filter_from_date + "/" + filter_to_date;
+			window.location = site_url+"tax_invoices" + "/index/?from_date=" + filter_from_date + "&to_date=" + filter_to_date + "&client_id=" + filter_client_id + "&status=" + filter_status;
 			//alert(objToString(response.item));
 		}
 		else {
@@ -752,11 +752,6 @@ function ajax_print_full_report()
 	else if(from_date == '' && to_date == '')
 	{
 		alert('Please enter the date from and date to');
-		$('.loading').fadeOut('slow');
-	}
-	else if(status == '' )
-	{
-		alert('Please select status');
 		$('.loading').fadeOut('slow');
 	}
 	else

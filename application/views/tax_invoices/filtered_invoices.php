@@ -15,7 +15,10 @@
 		<td class="text-right invoice_amt"><?php echo format_amount($invoice['invoice_amount']); ?></td>
         <td class="text-right amt_paid"><?php echo format_amount($invoice['total_paid']); ?></td>
 		<td style="width:32%">
-		<a href="<?php echo site_url('tax_invoices/edit/'.$invoice['invoice_id'].'/'.$from_date.'/'.$to_date.'/'.$client_id.'/'.$status);?>" class="btn btn-xs btn-primary"><i class="fa fa-check"> Edit </i></a>
+		<!--a href="<?php echo site_url('tax_invoices/edit/'.$invoice['invoice_id'].'/'.$from_date.'/'.$to_date.'/'.$client_id.'/'.$status);?>" class="btn btn-xs btn-primary"><i class="fa fa-check"> Edit </i></a-->
+		
+		<a href="<?php echo site_url('tax_invoices/edit/?invoice_id='.$invoice['invoice_id'].'&from_date='.$from_date.'&to_date='.$to_date.'&client_id='.$client_id.'&status='.$status);?>" class="btn btn-xs btn-primary"><i class="fa fa-check"> Edit </i></a>
+		
 		<a href="javascript:;" onclick="enterPayment('<?php echo $invoice['invoice_id']; ?>')" class="btn btn-success btn-xs"><i class="fa fa-usd"> Enter Payment </i></a>
 		<a href="javascript:;" class="btn btn-info btn-xs" onclick="viewInvoice('<?php echo $invoice['invoice_id']; ?>')"><i class="fa fa-search"> Preview </i></a>
 		<a href="<?php echo site_url('tax_invoices/viewpdf/'.$invoice['invoice_id']);?>" class="btn btn-warning btn-xs">Download pdf </a>

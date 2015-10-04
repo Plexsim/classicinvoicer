@@ -108,9 +108,9 @@ body {
 	</tr>	
 	<tr>
 		<td width="70%">	
-			<p>Date : <?php echo format_date($cash_details['cash_details']->cash_date_created); ?> </p>
+			<p style="font-size:13px">Date : <?php echo format_date($cash_details['cash_details']->cash_date_created); ?> </p>
 			<p>Cash Voucher No : <?php echo $cash_details['cash_details']->cash_number; ?></p>
-			<p>Receiver Name : <?php echo $cash_details['cash_details']->staff_name; ?></p>												
+			<p style="font-size:13px">Receiver Name : <?php echo $cash_details['cash_details']->staff_name; ?></p>												
 		</td>								
 	</tr>
 	</table>
@@ -148,7 +148,7 @@ body {
 	</td>
 	
 	<td width="30%">
-		<label class="control-label">Staff : <?php echo $cash_details['cash_details']->staff_name; ?></label>
+		<label class="control-label">Received By : <?php echo $cash_details['cash_details']->staff_name; ?></label>
 		<br/><br/><br/>
 		................................................<br/>
 		<i>Signature &amp; Stamp</i>		

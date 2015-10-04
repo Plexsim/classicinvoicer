@@ -28,30 +28,21 @@
 		
 	    	$('.loading').fadeIn('slow');
 
-	    	if(from_date == '' && to_date == '')
-	    	{
-	    		alert('Please enter the date from and date to');
-	    		$('.loading').fadeOut('slow');
-	    	}
-	    	else
-	    	{
-	    		$('.loading').fadeOut('slow');
+    		$.post("<?php echo site_url('tax_invoices/ajax_filter_invoices_date'); ?>", {
+    			from_date: from_date,
+    			to_date: to_date,
+    			status: status,
+    			client_id: client_id,
+            },
+            function(data) {
+	            
+               $('#invoice_table_body').html(data);
 
-	    		$.post("<?php echo site_url('tax_invoices/ajax_filter_invoices_date'); ?>", {
-	    			from_date: from_date,
-	    			to_date: to_date,
-	    			status: status,
-	    			client_id: client_id,
-	            },
-	            function(data) {
-		            
-	               $('#invoice_table_body').html(data);
-
-	               
-				   $('.loading').fadeOut('slow');
-	            });
+               
+			   $('.loading').fadeOut('slow');
+            });
 	    		
-	    	}
+	    	
 
 	    }
 
@@ -131,7 +122,7 @@
         <div class="row">
           <div class="col-lg-12">
             <h3 class="pull-left">Tax Invoices</h3>
-			<a href="<?php echo $this->config->item('nav_base_url'); ?>tax_invoices/newinvoice" class="btn btn-large btn-success pull-right"><i class="fa fa-plus"> New Tax Invoice </i></a>
+            <a href="<?php echo site_url('tax_invoices/newinvoice');?>" class="btn btn-large btn-success pull-right"><i class="fa fa-plus"> New Tax Invoice </i></a>
           </div>
         </div><!-- /.row -->
 
@@ -200,7 +191,7 @@
 							<div class="form-group">
 								<label>Status : </label>
 								<select name="status" id="status" class="form-control">
-									<option value="all" <?php echo ($status == '') ? 'selected' : ''; ?>>ALL</option>
+									<option value="all" <?php echo ($status == '' || $status == 'all') ? 'selected' : ''; ?>>ALL</option>
 									<option value="UNPAID" <?php echo ($status == 'UNPAID') ? 'selected' : ''; ?>>UNPAID</option>
 									<option value="PAID" <?php echo ($status == 'PAID') ? 'selected' : ''; ?>>PAID</option>
 									<option value="CANCELLED" <?php echo ($status == 'CANCELLED') ? 'selected' : ''; ?>>CANCELLED</option>
@@ -244,13 +235,13 @@
 						?>
 						<tr>
 						<td><?php echo status_label($invoice['invoice_status']);?></td>
-                        <td><a href="<?php echo site_url('tax_invoices/edit/'.$invoice['invoice_id']);?>"><?php echo $invoice['invoice_number']; ?></a></td>
+                        <td><a href="<?php echo site_url('tax_invoices/edit/?invoice_id='.$invoice['invoice_id']);?>"><?php echo $invoice['invoice_number']; ?></a></td>
                         <td><?php echo format_date($invoice['invoice_date_created']); ?></td>
                         <td><a href="<?php echo site_url('clients/editclient/'.$invoice['client_id']); ?>"><?php echo ucwords($invoice['client_name']); ?></a></td>
                         <td class="text-right invoice_amt"><?php echo format_amount($invoice['invoice_amount']); ?></td>
                         <td class="text-right amt_paid"><?php echo format_amount($invoice['total_paid']); ?></td>
 						<td style="width:32%">
-						<a href="<?php echo site_url('tax_invoices/edit/'.$invoice['invoice_id']);?>" class="btn btn-xs btn-primary"><i class="fa fa-check"> Edit </i></a>
+						<a href="<?php echo site_url('tax_invoices/edit/?invoice_id='.$invoice['invoice_id']);?>" class="btn btn-xs btn-primary"><i class="fa fa-check"> Edit </i></a>
 						<a href="javascript:;" onclick="enterTaxPayment('<?php echo $invoice['invoice_id']; ?>')" class="btn btn-success btn-xs"><i class="fa fa-usd"> Enter Payment </i></a>
 						<a href="javascript:;" class="btn btn-info btn-xs" onclick="viewTaxInvoice('<?php echo $invoice['invoice_id']; ?>')"><i class="fa fa-search"> Preview </i></a>
 						<a href="<?php echo site_url('tax_invoices/viewpdf/'.$invoice['invoice_id']);?>" class="btn btn-warning btn-xs">Download pdf </a>
