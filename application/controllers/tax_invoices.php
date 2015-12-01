@@ -227,12 +227,12 @@ class Tax_invoices extends MY_Controller {
 		$to_date 		= $this->input->post('to_date');
 		$invoice_status = $this->input->post('status');
 		$client_id 		= $this->input->post('client_id');
-		
+
 		$invoice_status = ($invoice_status != 'all' ) ? $invoice_status : 'all';
-		
-		
-		
+
 		$data['invoices']	= $this->tax_invoice_model->get_invoices_date($from_date, $to_date, $client_id, $invoice_status);
+		
+		
 		$data['from_date']	= $from_date != '' ? $from_date : '';
 		$data['to_date']	= $to_date != '' ? $to_date : '';
 		$data['status']		= $invoice_status;
@@ -246,11 +246,13 @@ class Tax_invoices extends MY_Controller {
 /*---------------------------------------------------------------------------------------------------------
 | Function to edit invoice
 |----------------------------------------------------------------------------------------------------------*/
-	function edit()
+	function edit($invoice_id=0)
 	{
 		$data = array();
 		
-		$invoice_id = $this->input->get('invoice_id');
+		if(empty($invoice_id)):
+			$invoice_id = $this->input->get('invoice_id');		
+		endif;						
 		$from_date = $this->input->get('from_date');
 		$to_date = $this->input->get('to_date');
 		$client_id = $this->input->get('client_id');
@@ -284,6 +286,7 @@ class Tax_invoices extends MY_Controller {
 	{
 		$this->common_model->deleterecord('ci_tax_invoice_items', 'item_id', $item_id);
 		$this->session->set_flashdata('success', 'The item has been deleted successfully !!');
+		
 		redirect('tax_invoices/edit/'.$invoice_id);
 	}
 /*---------------------------------------------------------------------------------------------------------

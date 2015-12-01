@@ -208,7 +208,7 @@
 					<input type="hidden" value="<?php echo $from_date;?>" name="search_from_date" id="search_from_date">
 					<input type="hidden" value="<?php echo $to_date;?>" name="search_to_date" id="search_to_date">
 					<input type="hidden" value="<?php echo $client_id;?>" name="search_client_id" id="search_client_id">
-					<input type="hidden" value="<?php echo $status;?>" name="search_status" id="search_status">
+					<input type="hidden" value="<?php echo $status == '' ? 'all' : $status;?>" name="search_status" id="search_status">
 						
 																							
 				</div>

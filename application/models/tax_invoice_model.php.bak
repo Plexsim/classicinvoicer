@@ -167,7 +167,15 @@
 		$this->db->from('ci_tax_invoices');
 		$this->db->join('ci_clients', 'ci_clients.client_id = ci_tax_invoices.client_id');
 		$this->db->where('ci_tax_invoices.invoice_id', $invoice_id);
-		$invoice_details = $this->db->get()->row();
+		
+		$records = $this->db->get();
+		$invoice_details;
+		if($records->num_rows() > 0){
+			$invoice_details = $records->row();			
+		}
+		
+		//$invoice_details = $this->db->get()->row();
+		
 		
 		$invoice_totals 	= $this->get_invoice_total_amount($invoice_id);
 		$invoice_paid_amt 	= $this->get_invoice_paid_amount($invoice_id);

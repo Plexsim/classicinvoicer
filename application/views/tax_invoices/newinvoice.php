@@ -38,7 +38,11 @@
 							  <div class="panel-body">
 							  <input type="hidden" id="invoice_status" name="invoice_status" value="unpaid"/>
 							  <input type="hidden" name="save_type" value="new" id="save_type" />
-
+							  <input type="hidden" value="" name="search_from_date" id="search_from_date">
+							  <input type="hidden" value="" name="search_to_date" id="search_to_date">					
+							  <input type="hidden" value="" name="search_client_id" id="search_client_id">
+							  <input type="hidden" value="all" name="search_status" id="search_status">
+							  
 							  <div class="form-group">
 								<label>Tax Invoice Number </label>
 								 <input type="text" id="invoice_number" class="form-control" name="invoice_number" value="<?php echo $invoice_number; ?>"/>
