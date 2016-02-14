@@ -122,7 +122,7 @@
 			<a href="<?php echo site_url('debt/newdebt');?>" class="btn btn-large btn-success pull-right"><i class="fa fa-plus"> New Debt </i></a>
           </div>
         </div><!-- /.row -->
-
+		
         <div class="row">
           <div class="col-lg-12">
             <div class="panel panel-primary">
@@ -205,11 +205,12 @@
                   <table class="table table-bordered table-striped tablesorter">
                     <thead>
                       <tr class="table_header">
-						<th>Status</th>                       
-                        <th>Transaction Date</th>
+						<th>Date</th>                       
+                        <th>Reference</th>
+                        <th>Description</th>
 						<th>Client Name</th>
-                        <th class="text-right">Amount UNPAID</th>                        
-                        <th class="text-right">Amount PAID</th>
+                        <th class="text-right">Debit</th>                        
+                        <th class="text-right">Credit</th>
                         <th>Actions</th>
                       </tr>
                     </thead>
@@ -217,12 +218,13 @@
 					<?php
 					if( isset($debt) && !empty($debt))
 					{
-						foreach ($debt as $count => $debt)
+						foreach ($debt['debt_details'] as $count => $debt)
 						{
 						?>
-						<tr>
-						<td><?php echo status_label($debt['debt_status']);?></td>
-                        <td><?php echo format_date($debt['debt_date_created']); ?></td>
+						<tr>					
+                        <td style="width:20%"><?php echo format_date($debt['debt_date_created']); ?></td>
+                        <td><?php echo format_date($debt['debt_reference']); ?></td>
+                        <td><?php echo format_date($debt['debt_description']); ?></td>
                         <td><a href="<?php echo site_url('clients/editclient/'.$debt['client_id']); ?>"><?php echo ucwords($debt['client_name']); ?></a></td>
                         <td class="text-right invoice_amt"><?php echo format_amount($debt['debt_amount_unpaid']); ?></td>
                         <td class="text-right invoice_amt"><?php echo format_amount($debt['debt_amount_paid']); ?></td>

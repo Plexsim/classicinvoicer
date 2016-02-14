@@ -156,6 +156,16 @@ class Debt extends MY_Controller {
 		echo json_encode($response);
 	}
 	
+	function viewpdf($from_date, $date_to, $client_id, $status = 'all')
+	{
+		$data 		  = array();
+		$data['title'] 	 = $this->title;
+	
+		$debt_details = $this->debt_model->previewdebt($from_date, $date_to, $client_id, $status);		
+		$balance_bring_forward = $this->debt_model->balance_bring_forward($from_date, $date_to, $client_id);
+		$this->load->helper('pdf');
+		$pdf_invoice = generate_pdf_debt($debt_details, $balance_bring_forward, true, NULL);
+	}
 	
 
 

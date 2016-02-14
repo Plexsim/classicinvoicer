@@ -57,7 +57,8 @@
 		$this->db->delete($tablename);
 	}
 	function get_select_option($table,$id,$name,$selected=0){
-		$query = $this->db->get($table);
+		$this->db->order_by($name, 'ASC');
+		$query = $this->db->get($table);		
 		$select = '<option value="">SELECT</option>';
 		if($query->num_rows()>0){
 			foreach($query->result_array() as $row){

@@ -116,3 +116,22 @@ function generate_pdf_receipt($receipt_data, $stream = TRUE, $company = '')
 
 	return pdf_create($html, $filename , $stream);
 }
+
+function generate_pdf_debt($debt_data, $balance_bring_forward, $stream = TRUE)
+{
+	$CI = & get_instance();
+
+	$data = array(
+			'debt_details'   			=> $debt_data,
+			'balance_bring_forward'		=> $balance_bring_forward,
+			'output_type'       		=> 'pdf'
+	);
+
+	$html = $CI->load->view('pdf_templates/debt_balance', $data, TRUE);
+
+	$CI->load->helper('mpdf');
+
+	$filename = 'statement_'.strtolower(trim(preg_replace('#\W+#', '_', $debt_data['client_name'].'_'.format_date_month($debt_data['date_to'])), '_'));
+
+	return pdf_create($html, $filename , $stream);
+}

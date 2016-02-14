@@ -265,4 +265,11 @@ function format_date($date = ''){
 	$formated_date = date($date_format, strtotime($date));
 	return $formated_date;
 }
+
+function format_date_month($date = ''){
+	$date_config = get_siteconfig('date_format');
+	$date_format = 'M-Y';
+	$formated_date = date($date_format, strtotime($date));
+	return $formated_date;
+}
  
