@@ -285,24 +285,25 @@
 		
 		$invoice = $this->db->select('invoice_discount')->where('invoice_id', $invoice_id)->get('ci_tax_invoices')->row();		
 						
-		if(!empty($invoice_items->result_array()) && is_array($invoice_items->result_array())):		
+		//if(!empty($invoice_items->result_array()) && is_array($invoice_items->result_array())):		
 			foreach($invoice_items->result_array() as $item_count=>$item)
 			{
 				$item_amount = ($item['item_quantity'] * $item['item_price']) - $item['item_discount'];			
 				$item_total = $item_total + $item_amount;
 				$items_total_discount += $item['item_discount'];
-			}
-			
-			$sub_total = $item_total - $invoice->invoice_discount;
 			
 			
-			if($item['item_taxrate_id'] != 0)
-			{
-				$tax_rate = $this->common_model->get_tax($item['item_taxrate_id']);
-				$tax_total = $sub_total * $tax_rate;
+				$sub_total = $item_total - $invoice->invoice_discount;
+				
+				
+				if($item['item_taxrate_id'] != 0)
+				{
+					$tax_rate = $this->common_model->get_tax($item['item_taxrate_id']);
+					$tax_total = $sub_total * $tax_rate;
+				}
 			}
 		
-		endif;
+		//endif;
 						
 		
 		$amount_paid = $this->get_invoice_paid_amount($invoice_id);

@@ -454,6 +454,63 @@ function ajax_save_stock()
 	}
 }
 
+//function to save debt
+function ajax_save_debt()
+{
+	var client = $('#client_to_debt').val();
+	var debt_date = $('#debt_date').val();	
+	var debt_description = $('#debt_description').val();
+	var debt_status = $('#debt_status').val();	
+	var debt_id = $('#debt_id').val();
+	var save_type  = $('#save_type').val();
+	var debt_amount = $('#debt_amount').val();
+	
+	var filter_from_date = $('#search_from_date').val();
+	var filter_to_date = $('#search_to_date').val();
+	var filter_client_id = $('#search_client_id').val();
+	var filter_status = $('#search_status').val();
+		
+	$('.loading').fadeIn('slow');
+
+	if(client == '')
+	{
+		alert('Please select a client to debt');
+		$('.loading').fadeOut('slow');
+	}
+	else if(debt_date == '' )
+	{
+		alert('Please enter the debt date');
+		$('.loading').fadeOut('slow');
+	}	
+	else
+	{
+	var items = [];	
+	
+	  $.post(site_url+"debt/ajax_save_debt", {
+	  debt_client : client,
+	  debt_date : debt_date,
+	  debt_description : debt_description,
+	  debt_status : debt_status,	  
+	  debt_id 	: debt_id,
+	  save_type		: save_type,
+	  debt_amount : debt_amount,
+	  items: JSON.stringify(items)
+	},
+	function(data_response) {
+		var response = JSON.parse(data_response);
+		if (response.success == '1') 
+		{
+			window.location = site_url+"debt" + "/index/?from_date=" + filter_from_date + "&to_date=" + filter_to_date + "&client_id=" + filter_client_id + "&status=" + filter_status;
+			//alert(objToString(response.item));
+		}
+		else {
+			alert(response.error);
+		}
+		$('.loading').fadeOut('slow');
+	});
+	}
+}
+
 // function to save quotes
 function ajax_save_quote()
 {
@@ -615,6 +672,14 @@ function delete_quote (quote_id)
 	if(confirm("Are you sure you want to permanently delete this quote, you will not be able to undo this action"))
 	{
 		window.location = site_url+"quotes/delete_quote/"+quote_id;
+	}
+}
+//function to delete an debt record
+function delete_debt (debt_id)
+{
+	if(confirm("Are you sure you want to permanently delete this Debt Record, you will not be able to undo this action"))
+	{
+		window.location = site_url+"debt/delete_debt/"+debt_id;
 	}
 }
 //function to display email templates

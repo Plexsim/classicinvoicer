@@ -54,12 +54,25 @@ class Receipts extends MY_Controller {
 				if($save_type == 'new'){
 						$receipt_details = array('user_id' 				=> $this->session->userdata('user_id'),
 												 'client_id' 			=> $this->input->post('receipt_client'),
-												 'receipt_amount' 			=> $this->input->post('receipt_amount'),
+												 'receipt_amount' 		=> $this->input->post('receipt_amount'),
 												 'receipt_number' 		=> $receipt_number,
 												 'receipt_terms' 		=> $this->input->post('receipt_terms'),
 												 'receipt_date_created' => date('Y-m-d', strtotime($this->input->post('receipt_date'))),
 												);
 						$receipt_id = $this->common_model->saverecord('ci_receipts', $receipt_details);
+						
+						// add new for DEBT function aumatically it to record it is paid...
+						$debt_details = array('user_id' 				=> $this->session->userdata('user_id'),
+								'client_id' 			=> $this->input->post('receipt_client'),
+								'receipt_id'			=> $receipt_id,
+								'debt_reference' 		=> 'Receipt No: '.$receipt_number,
+								'debt_description' 		=> $this->input->post('receipt_terms'),
+								'debt_amount_paid' 		=> $this->input->post('receipt_amount'),
+								'debt_date_updated' 	=> date('Y-m-d'),
+								'debt_date_created' 	=> date('Y-m-d', strtotime($this->input->post('receipt_date'))),
+								'debt_status'			=> 'PAID'
+						);
+						$debt_id = $this->common_model->saverecord('ci_debt', $debt_details);												
 				}
 				else
 				{
@@ -71,6 +84,42 @@ class Receipts extends MY_Controller {
 												 'receipt_date_created' => date('Y-m-d', strtotime($this->input->post('receipt_date'))),
 											);
 						$this->common_model->update_records('ci_receipts', 'receipt_id', $receipt_id, $receipt_details);
+						
+						$debt_record = $this->common_model->select_record('ci_debt', 'receipt_id', $receipt_id);
+						
+						if($debt_record):
+						
+							$debt_details = array(
+									'user_id' 				=> $this->session->userdata('user_id'),
+									'client_id' 			=> $this->input->post('receipt_client'),
+									'debt_reference' 		=> 'Receipt No: '.$receipt_number,
+									'debt_description' 		=> $this->input->post('receipt_terms'),
+									'debt_amount_paid' 		=> $this->input->post('receipt_amount'),
+									'debt_date_created' 	=> date('Y-m-d', strtotime($this->input->post('receipt_date'))),
+									'debt_date_updated' 	=> date('Y-m-d'),
+									'debt_status'			=> 'PAID'
+							);
+								
+							$this->common_model->update_records('ci_debt', 'receipt_id', $receipt_id, $debt_details);
+						
+						else:
+						
+							$debt_details = array(
+									'user_id' 				=> $this->session->userdata('user_id'),
+									'client_id' 			=> $this->input->post('receipt_client'),
+									'receipt_id'			=> $receipt_id,
+									'debt_reference' 		=> 'Receipt No: '.$receipt_number,
+									'debt_description' 		=> $this->input->post('receipt_terms'),
+									'debt_amount_paid' 		=> $this->input->post('receipt_amount'),
+									'debt_date_updated' 	=> date('Y-m-d'),
+									'debt_date_created' 	=> date('Y-m-d', strtotime($this->input->post('receipt_date'))),
+									'debt_status'			=> 'PAID'
+							);
+							
+							$debt_id = $this->common_model->saverecord('ci_debt', $debt_details);
+						
+						endif;
+							
 				}
 				
 				$response = array(

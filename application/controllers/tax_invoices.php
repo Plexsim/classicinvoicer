@@ -136,6 +136,17 @@ class Tax_invoices extends MY_Controller {
 												 'invoice_date_created' => date('Y-m-d', strtotime($this->input->post('invoice_date'))),
 												);
 						$invoice_id = $this->common_model->saverecord('ci_tax_invoices', $invoice_details);
+																		
+						// add new for DEBT function aumatically it...
+						$debt_details = array('user_id' 				=> $this->session->userdata('user_id'),
+								'client_id' 			=> $this->input->post('invoice_client'),
+								'invoice_id'			=> $invoice_id,
+								'debt_reference' 		=> 'Tax Invoice No: '.$invoice_number,
+								'debt_description' 		=> $this->input->post('invoice_terms'),								
+								'debt_date_updated' 	=> date('Y-m-d'),
+								'debt_date_created' 	=> date('Y-m-d', strtotime($this->input->post('invoice_date'))),
+						);
+						$debt_id = $this->common_model->saverecord('ci_debt', $debt_details);
 				}
 				else
 				{
@@ -148,7 +159,43 @@ class Tax_invoices extends MY_Controller {
 												 'invoice_date_created' => date('Y-m-d', strtotime($this->input->post('invoice_date'))),
 											);
 						$this->common_model->update_records('ci_tax_invoices', 'invoice_id', $invoice_id, $invoice_details);
-				}				
+						
+						//update debt once anything changes
+						//update amount once it is update or save in DEBT
+						// but it need do a checking which is if old record and update, so...												
+						$debt_record = $this->common_model->select_record('ci_debt', 'invoice_id', $invoice_id);
+						
+						if($debt_record):
+						
+							$debt_details = array(
+									'user_id' 				=> $this->session->userdata('user_id'),
+									'client_id' 			=> $this->input->post('invoice_client'),								
+									'debt_reference' 		=> 'Tax Invoice No: '.$invoice_number,
+									'debt_description' 		=> $this->input->post('invoice_terms'),
+									'debt_date_created' 	=> date('Y-m-d', strtotime($this->input->post('invoice_date'))),
+									'debt_date_updated' 	=> date('Y-m-d')								
+							);
+							
+							$this->common_model->update_records('ci_debt', 'invoice_id', $invoice_id, $debt_details);
+							
+						else:
+						
+							// add new for DEBT function aumatically it...
+							if($this->input->post('invoice_status') == 'unpaid'){
+								$debt_details = array('user_id' 				=> $this->session->userdata('user_id'),
+										'client_id' 			=> $this->input->post('invoice_client'),
+										'invoice_id'			=> $invoice_id,
+										'debt_reference' 		=> 'Tax Invoice No: '.$invoice_number,
+										'debt_description' 		=> $this->input->post('invoice_terms'),
+										'debt_date_updated' 	=> date('Y-m-d'),
+										'debt_date_created' 	=> date('Y-m-d', strtotime($this->input->post('invoice_date'))),
+								);
+								$debt_id = $this->common_model->saverecord('ci_debt', $debt_details);
+							}
+						endif;
+				}
+				
+				$debt_amount = 0;
 				
 				foreach ($items as $item) 
 				{
@@ -164,6 +211,8 @@ class Tax_invoices extends MY_Controller {
 											   'item_price'			=> $item->item_price,
 											   'item_discount'		=> $item->item_discount,
 											  );
+						$debt_amount += (($item->item_price * $item->item_quantity) - $item->item_discount);
+						
 						if($item_id != '')
 						{
 							$this->common_model->update_records('ci_tax_invoice_items', 'item_id', $item_id, $item_details);
@@ -175,7 +224,19 @@ class Tax_invoices extends MY_Controller {
 							$this->session->set_flashdata('success', 'The invoice has been created successfully !!');
 						}
 					}
-				}
+				}				
+				//update amount once it is update or save in DEBT
+				$debt_record = $this->common_model->select_record('ci_debt', 'invoice_id', $invoice_id);	
+				$tax_percent = 1 + $this->common_model->get_tax($item->tax_rate_id);				
+				//$tax_percent = 1.06;
+				
+				if($debt_record):
+					$debt_amount_details = array(
+							'debt_amount_unpaid' 		=> ($debt_amount - $this->input->post('invoice_discount_amount')) * $tax_percent,
+							'debt_date_updated' => date('Y-m-d')
+					);
+					$this->common_model->update_records('ci_debt', 'invoice_id', $invoice_id, $debt_amount_details);
+				endif;
 				
 				$response = array(
 	                'success'           => 1,

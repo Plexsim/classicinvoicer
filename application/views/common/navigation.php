@@ -26,7 +26,7 @@
       <li <?=(isset($activemenu) && $activemenu == 'tax_reports') ? 'class="active"' : ''?>><a href="<?php echo site_url('tax_reports'); ?>"><i class="fa fa-signal"></i> Tax Reports </a></li>
       <li <?=(isset($activemenu) && $activemenu == 'stock') ? 'class="active"' : ''?>><a href="<?php echo site_url('stock'); ?>"><i class="fa fa-gift"></i> Stock </a></li>
       <!--li <?=(isset($activemenu) && $activemenu == 'statement') ? 'class="active"' : ''?>><a href="<?php echo site_url('statement'); ?>"><i class="fa fa-signal"></i> Client Statement </a></li-->
-      
+      <li <?=(isset($activemenu) && $activemenu == 'debt') ? 'class="active"' : ''?>><a href="<?php echo site_url('debt'); ?>"><i class="fa fa-gift"></i> Debt </a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right navbar-user">
     <li class="dropdown user-dropdown">
