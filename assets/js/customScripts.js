@@ -418,6 +418,7 @@ function ajax_save_stock()
 	var stock_status = $('#stock_status').val();
 	var stock_number = $('#stock_number').val();
 	var stock_amount = $('#stock_amount').val();
+	var supplier = $('#supplier').val();
 	var stock_id = $('#stock_id').val();
 	var save_type  = $('#save_type').val();
 	
@@ -436,6 +437,7 @@ function ajax_save_stock()
 	  stock_status : stock_status,
 	  stock_number : stock_number,
 	  stock_amount : stock_amount,
+	  supplier 	: supplier,
 	  stock_id 	: stock_id,
 	  save_type		: save_type
 	},

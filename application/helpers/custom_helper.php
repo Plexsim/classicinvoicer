@@ -204,6 +204,14 @@ function stock_status_label($status = 'STOCK_IN'){
 		$class = 'warning';	
 		$label_displayed = 'STOCK OUT';
 	}
+	if($status == 'OTHER_IN'){
+		$class = 'success';
+		$label_displayed = 'OTHER IN';
+	}
+	elseif ($status == 'OTHER_OUT'){
+		$class = 'warning';	
+		$label_displayed = 'OTHER OUT';
+	}
 	else
 		$class = 'warning';
 

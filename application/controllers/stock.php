@@ -33,6 +33,7 @@ class Stock extends MY_Controller {
 		$data['title'] 			= $this->title;
 		$data['activemenu'] 	= $this->activemenu;
 		$data['stock_number']	= $this->generate_stock_number();
+		$data['suppliers'] 		= $this->common_model->get_select_option('ci_suppliers', 'supplier_id', 'supplier_name');
 		$data['pagecontent'] 	= 'stocks/newstock';
 		$this->load->view('common/holder', $data);
 	}
@@ -94,6 +95,7 @@ class Stock extends MY_Controller {
 		$data['title'] 			= $this->title;
 		$data['activemenu'] 	= $this->activemenu;
 		$data['stock_details']= $this->stock_model->get_stock_data($stock_id);
+		$data['suppliers'] 		= $this->common_model->get_select_option('ci_suppliers', 'supplier_id', 'supplier_name', $data['stock_details']->supplier_id);
 		$data['pagecontent'] 	= 'stocks/editstock';
 		$this->load->view('common/holder', $data);
 	}
@@ -137,6 +139,7 @@ class Stock extends MY_Controller {
 				$stock_details = array(
 						'user_id' 				=> $this->session->userdata('user_id'),
 						'stock_number' 		=> $stock_number,
+						'supplier_id'		=> $this->input->post('supplier'),
 						'stock_amount' 		=> $this->input->post('stock_amount'),
 						'stock_terms' 		=> $this->input->post('stock_terms'),
 						'stock_status' 		=> $this->input->post('stock_status'),
@@ -149,6 +152,7 @@ class Stock extends MY_Controller {
 				$stock_details = array(
 						'stock_terms' 		=> $this->input->post('stock_terms'),
 						'stock_number' 		=> $stock_number,
+						'supplier_id'		=> $this->input->post('supplier'),
 						'stock_amount' 		=> $this->input->post('stock_amount'),
 						'stock_status' 		=> $this->input->post('stock_status'),							
 						'stock_date_created' => date('Y-m-d', strtotime($this->input->post('stock_date'))),

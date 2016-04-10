@@ -20,6 +20,7 @@
       <!--li <?=(isset($activemenu) && $activemenu == 'overdue') ? 'class="active"' : ''?>><a href="<?php echo site_url('invoices/overdue'); ?>"><i class="fa fa-gbp"></i> Overdue Invoices </a></li-->
       <li <?=(isset($activemenu) && $activemenu == 'clients') ? 'class="active"' : ''?>><a href="<?php echo site_url('clients'); ?>"><i class="fa fa-user"></i> Clients </a></li>
       <li <?=(isset($activemenu) && $activemenu == 'staffs') ? 'class="active"' : ''?>><a href="<?php echo site_url('staffs'); ?>"><i class="fa fa-user"></i> Staffs </a></li>
+      <li <?=(isset($activemenu) && $activemenu == 'suppliers') ? 'class="active"' : ''?>><a href="<?php echo site_url('suppliers'); ?>"><i class="fa fa-user"></i> Suppliers </a></li>
       <!--li <?=(isset($activemenu) && $activemenu == 'quotes') ? 'class="active"' : ''?>><a href="<?php echo site_url('quotes');?>"><i class="fa fa-dashboard"></i> Quotes </a></li-->
       <li <?=(isset($activemenu) && $activemenu == 'products') ? 'class="active"' : ''?>><a href="<?php echo site_url('products'); ?>"><i class="fa fa-money"></i> Products </a></li>
       <!--li <?=(isset($activemenu) && $activemenu == 'reports') ? 'class="active"' : ''?>><a href="<?php echo site_url('reports'); ?>"><i class="fa fa-signal"></i> Reports </a></li-->

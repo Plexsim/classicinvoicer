@@ -51,6 +51,11 @@
 								   <input class="date form-control" size="16" type="text" name="stock_date" id="stock_date"/>
 									<span class="input-group-addon add-on"><i class="fa fa-calendar" style="display: inline"></i></span>
 								</div>
+
+								<div class="form-group">
+								<label>Supplier </label>
+								<select name="supplier" id="supplier" class="form-control"><?php echo $suppliers; ?></select>
+								</div>
 								
 								<label>Stock Amount</label>
 								<div class="form-group input-group" style="margin-left:0;">
@@ -70,6 +75,8 @@
 									<select class="form-control" name="stock_status" id="stock_status">
 									<option value="STOCK_IN"> STOCK IN </option>
 									<option value="STOCK_OUT"> STOCK OUT </option>
+									<option value="OTHER_IN"> OTHER IN </option>
+									<option value="OTHER_OUT"> OTHER OUT </option>
 									</select>
 								</div>
 							  </div>							  
